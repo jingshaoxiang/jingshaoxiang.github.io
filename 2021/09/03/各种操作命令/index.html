@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="linux系统命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux基础命令">
+<meta property="og:url" content="http://example.com/2021/09/03/%E5%90%84%E7%A7%8D%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="XiaoJing">
+<meta property="og:description" content="linux系统命令">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-03T02:22:01.175Z">
+<meta property="article:modified_time" content="2021-10-30T10:01:16.436Z">
+<meta property="article:author" content="小靖">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/09/03/%E5%90%84%E7%A7%8D%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux基础命令 | XiaoJing</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">XiaoJing</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活中的点点滴滴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/03/%E5%90%84%E7%A7%8D%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="小靖">
+      <meta itemprop="description" content="直到这一刻微笑着说话为止，我至少留下了一公升眼泪">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="XiaoJing">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux基础命令
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-03 10:22:01" itemprop="dateCreated datePublished" datetime="2021-09-03T10:22:01+08:00">2021-09-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-30 18:01:16" itemprop="dateModified" datetime="2021-10-30T18:01:16+08:00">2021-10-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.3k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+
+      
+        <h1 id="linux系统命令"><a href="#linux系统命令" class="headerlink" title="linux系统命令"></a>linux系统命令</h1><span id="more"></span>
+
+<h2 id="用户命令"><a href="#用户命令" class="headerlink" title="用户命令"></a>用户命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">useradd username 新建一个用户</span><br><span class="line"></span><br><span class="line">useradd -u uid username 指定用户的uid</span><br><span class="line"></span><br><span class="line">useradd -g gid username 指定用户的gid（一定要存在）</span><br><span class="line"></span><br><span class="line">useradd -G gid useradd 指定用户的附加组（一定要存在）</span><br><span class="line"></span><br><span class="line">useradd -c ‘string’ username 指定用户的说明信息</span><br><span class="line"></span><br><span class="line">useradd -d 用户家目录 username 指定用户的家目录</span><br><span class="line"></span><br><span class="line">useradd -s /etc/shell username 指定用户所使用的shell（该用户的shell就为/etc/shell）</span><br><span class="line"></span><br><span class="line">passwd -S  查看用户状态  LK是锁定 PS是正常</span><br><span class="line"></span><br><span class="line">passwd -L  锁定用户</span><br><span class="line"></span><br><span class="line">passwd -u  解锁用户</span><br></pre></td></tr></table></figure>
+
+<h2 id="linux系统命令-1"><a href="#linux系统命令-1" class="headerlink" title="linux系统命令"></a>linux系统命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">uname  -r  查看系统版本</span><br><span class="line"></span><br><span class="line">route -n   查看ip基本信息</span><br><span class="line"></span><br><span class="line">ssh -v     查看ssh版本</span><br><span class="line"></span><br><span class="line">dmidecode |grep -P -A 5 &quot;Memory Device&quot;|grep Size|grep -v &#x27;Range&#x27;</span><br><span class="line">dmidecode -t 17    查看内存</span><br><span class="line"></span><br><span class="line">iblinkinfo -P  1   查看IB线</span><br><span class="line"></span><br><span class="line">sar 3 3            查看io负载</span><br><span class="line"></span><br><span class="line">hastatus -sum      查看数据库</span><br><span class="line"></span><br><span class="line">psrinfo -vp        查看cpu型号（报表服务器）</span><br><span class="line"></span><br><span class="line">无法打开 /var/log/sa/sa29: 没有那个文件或目录</span><br><span class="line">sar -o 29</span><br><span class="line">sar -u 查看近期cpu负载</span><br><span class="line">sar -m 查看近期内存负载</span><br></pre></td></tr></table></figure>
+
+<h2 id="硬盘命令"><a href="#硬盘命令" class="headerlink" title="硬盘命令"></a>硬盘命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l  查看硬盘</span><br><span class="line"></span><br><span class="line">lsblk     以树形格式列出所有块设备</span><br><span class="line"></span><br><span class="line">df -H     查看系统硬盘信息</span><br></pre></td></tr></table></figure>
+
+<h2 id="硬盘分区-格式化-挂载-大于2T"><a href="#硬盘分区-格式化-挂载-大于2T" class="headerlink" title="硬盘分区,格式化,挂载 (大于2T)"></a>硬盘分区,格式化,挂载 (大于2T)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">parted  /dev/sdd    进入新添加的硬盘,parted模式</span><br><span class="line"></span><br><span class="line">(parted)mklabel  gpt  定义分区表格式</span><br><span class="line"></span><br><span class="line">(parted)mkpart primary ext4 0% 100%  全部分区格式,分成一个大区</span><br><span class="line"></span><br><span class="line">(parted)print  查看创建好的分区</span><br><span class="line"></span><br><span class="line">(parted)quit   退出</span><br><span class="line"></span><br><span class="line">lsblk  查看刚刚创建的分区名称</span><br><span class="line"></span><br><span class="line">mkfs.ext4 /dev/sdd1    格式化硬盘&quot;分区&quot;</span><br><span class="line"></span><br><span class="line">mount /dev/sdd1  /data1/   挂载硬盘到指定位置</span><br><span class="line"></span><br><span class="line">vim  /etc/fstab   填写挂载信息,开机自动挂载</span><br><span class="line"></span><br><span class="line">df -H  查看是否挂载</span><br></pre></td></tr></table></figure>
+
+<h2 id="硬盘分区-格式化-挂载-小于2T"><a href="#硬盘分区-格式化-挂载-小于2T" class="headerlink" title="硬盘分区,格式化,挂载 (小于2T)"></a>硬盘分区,格式化,挂载 (小于2T)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lsblk  查看分区名称</span><br><span class="line"></span><br><span class="line">fdisk -l   确认好要分区的硬盘</span><br><span class="line"></span><br><span class="line">fdisk /dev/sdb     需要分区的磁盘</span><br><span class="line"></span><br><span class="line">n---p---1---回车---回车---回车----w----reboot</span><br><span class="line"></span><br><span class="line">fdisk -l  查看是否分区成功</span><br><span class="line"></span><br><span class="line">mkfs.ext3 /dev/sdb1   分区成功后,格式化硬盘</span><br><span class="line"></span><br><span class="line">mkdir  /date  创建挂载点</span><br><span class="line"></span><br><span class="line">mount /dev/sdb1  /date  挂载硬盘</span><br><span class="line"></span><br><span class="line">vim /etc/fstab   写入配置文件,开机自动挂载</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改sftp的端口号"><a href="#修改sftp的端口号" class="headerlink" title="修改sftp的端口号"></a>修改sftp的端口号</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vim  /etc/ssh/sshd_config  修改配置文件  找 Port 22 保留22端口,添加新开放的端口</span><br><span class="line"></span><br><span class="line"><span class="comment"># If you want to change the port on a SELinux system, you have to tell</span></span><br><span class="line"><span class="comment"># SELinux about this change.</span></span><br><span class="line"><span class="comment"># semanage port -a -t ssh_port_t -p tcp #PORTNUMBER</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">Port 12022</span><br><span class="line"><span class="comment">#Port 22</span></span><br><span class="line"><span class="comment">#AddressFamily any</span></span><br><span class="line"><span class="comment">#ListenAddress 0.0.0.0</span></span><br><span class="line"><span class="comment">#ListenAddress ::</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="脚本修改配置文件内容"><a href="#脚本修改配置文件内容" class="headerlink" title="脚本修改配置文件内容"></a>脚本修改配置文件内容</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sed -i <span class="string">&#x27;s/^SELINUX=.*/SELINUX=disabled/&#x27;</span> config  <span class="comment">#s/^ 以哪个开头 /改成什么/</span></span><br><span class="line"><span class="built_in">echo</span>  最后一行添加</span><br></pre></td></tr></table></figure>
+
+<h2 id="centos-进单用户模式"><a href="#centos-进单用户模式" class="headerlink" title="centos 进单用户模式"></a>centos 进单用户模式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Redhat 7进入单用户模式</span><br><span class="line"></span><br><span class="line">1）重启主机，在选择内核时按“任意键”让倒计时停止，然后按“e”键进入“编辑模式”（red hat 7.2系统适用）；</span><br><span class="line"></span><br><span class="line">2）进入“编辑模式”之后上下移动光标，找到以“linux16”开头这行，按“End”键将光标移动到最后，输入“rd.break console=tty0”，然后按“Ctrl+x”键进行保存并重启；</span><br><span class="line"></span><br><span class="line">3）在重启进入系统时停止后，输入“mount -o remount,rw /sysroot”, 改变“/sysroot”的权限为“读，写”</span><br><span class="line">再次输入“mount”查看已经改变为“读，写”的权限；</span><br><span class="line"></span><br><span class="line">4）输入“chroot /sysroot”改变根；</span><br><span class="line"></span><br><span class="line">5）<span class="comment"># passwd   修改root密码   （按提示输入2次密码）；</span></span><br><span class="line"></span><br><span class="line">6）完成后连续输入2次“<span class="built_in">exit</span>”重新打标，重新修改参数值；</span><br><span class="line"></span><br><span class="line">7）打标完成以后自动重启，重启以后使用root用户登录。</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置bond主备模式"><a href="#配置bond主备模式" class="headerlink" title="配置bond主备模式"></a>配置bond主备模式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># cd /etc/sysconfig/network-scripts/</span></span><br><span class="line"></span><br><span class="line">[root@localhost network-scripts]<span class="comment"># cat  ifcfg-bond0 </span></span><br><span class="line">TYPE=<span class="string">&quot;Ethernet&quot;</span></span><br><span class="line">NAME=<span class="string">&quot;bond0&quot;</span>   <span class="comment">#bond名称</span></span><br><span class="line">DEVICE=<span class="string">&quot;bond0&quot;</span></span><br><span class="line">ONBOOT=<span class="string">&quot;yes&quot;</span></span><br><span class="line">NM_CONTROLLED=<span class="string">&quot;no&quot;</span></span><br><span class="line">IPV6INIT=<span class="string">&quot;no&quot;</span></span><br><span class="line">BONDING_OPTS=<span class="string">&quot;miimon=100 mode=1&quot;</span>   <span class="comment">#bond的模式,1是主备</span></span><br><span class="line">IPADDR=<span class="string">&quot;192.168.126.130&quot;</span></span><br><span class="line">NETMASK=<span class="string">&quot;255.255.255.0&quot;</span></span><br><span class="line">GATEWAY=<span class="string">&quot;192.168.126.2&quot;</span></span><br><span class="line"></span><br><span class="line">[root@localhost network-scripts]<span class="comment"># cat ifcfg-ens33 </span></span><br><span class="line">TYPE=<span class="string">&quot;Ethernet&quot;</span></span><br><span class="line">DEVICE=<span class="string">&quot;ens33&quot;</span></span><br><span class="line">ONBOOT=<span class="string">&quot;yes&quot;</span></span><br><span class="line">NM_CONTROLLED=<span class="string">&quot;no&quot;</span></span><br><span class="line">MASTER=<span class="string">&quot;bond0&quot;</span></span><br><span class="line">SLAVE=yes</span><br><span class="line"></span><br><span class="line">[root@localhost network-scripts]<span class="comment"># cat ifcfg-ens34</span></span><br><span class="line">TYPE=<span class="string">&quot;Ethernet&quot;</span></span><br><span class="line">DEVICE=<span class="string">&quot;ens34&quot;</span></span><br><span class="line">ONBOOT=<span class="string">&quot;yes&quot;</span></span><br><span class="line">NM_CONTROLLED=<span class="string">&quot;no&quot;</span></span><br><span class="line">MASTER=<span class="string">&quot;bond0&quot;</span></span><br><span class="line">SLAVE=yes</span><br></pre></td></tr></table></figure>
+
+<h2 id="挂载本地镜像文件设置yum源"><a href="#挂载本地镜像文件设置yum源" class="headerlink" title="挂载本地镜像文件设置yum源"></a>挂载本地镜像文件设置yum源</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">服务器上传ISO镜像文件,文件名自己创建(/WenJian/rhel-server-7.4-x86_64-dvd.iso)</span><br><span class="line"></span><br><span class="line">[root@smh /]<span class="comment"># ls /WenJian/</span></span><br><span class="line">rhel-server-7.4-x86_64-dvd.iso</span><br><span class="line"></span><br><span class="line">做一个临时挂载,挂载点自己创建(/JingXiang)</span><br><span class="line"></span><br><span class="line">[root@smh /]<span class="comment"># mount /WenJian/rhel-server-7.4-x86_64-dvd.iso  /JingXiang/</span></span><br><span class="line">[root@smh /]<span class="comment"># df -H</span></span><br><span class="line">文件系统               容量  已用  可用 已用% 挂载点</span><br><span class="line">/dev/mapper/rhel-root   42G  5.3G   36G   13% /</span><br><span class="line">devtmpfs               1.1G     0  1.1G    0% /dev</span><br><span class="line">tmpfs                  1.1G     0  1.1G    0% /dev/shm</span><br><span class="line">tmpfs                  1.1G  9.1M  1.1G    1% /run</span><br><span class="line">tmpfs                  1.1G     0  1.1G    0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1              1.1G  150M  915M   15% /boot</span><br><span class="line">/dev/mapper/rhel-home   21G   34M   20G    1% /home</span><br><span class="line">tmpfs                  206M     0  206M    0% /run/user/0</span><br><span class="line">/dev/loop0             4.1G  4.1G     0  100% /JingXiang</span><br><span class="line"></span><br><span class="line">永久挂载(/etc/fstab)最后一行</span><br><span class="line"></span><br><span class="line">[root@smh /]<span class="comment"># cat /etc/fstab </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># /etc/fstab</span></span><br><span class="line"><span class="comment"># Created by anaconda on Thu Oct 28 13:48:20 2021</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Accessible filesystems, by reference, are maintained under &#x27;/dev/disk&#x27;</span></span><br><span class="line"><span class="comment"># See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">/dev/mapper/rhel-root   /                       xfs     defaults        0 0</span><br><span class="line">UUID=08e45538-51ad-42d6-80f9-5606ab21c0af /boot                   xfs     defaults        0 0</span><br><span class="line">/dev/mapper/rhel-home   /home                   xfs     defaults        0 0</span><br><span class="line">/dev/mapper/rhel-swap   swap                    swap    defaults        0 0</span><br><span class="line">/WenJian/rhel-server-7.4-x86_64-dvd.iso   /JingXiang  iso9660  loop  0 0 </span><br><span class="line"></span><br><span class="line">[root@smh /]<span class="comment"># mount -a  #全部重新挂载一遍  没有报错则没有问题</span></span><br><span class="line"></span><br><span class="line">设置本地yum源</span><br><span class="line"></span><br><span class="line">[root@smh ~]<span class="comment"># cd /etc/yum.repos.d</span></span><br><span class="line">[root@smh yum.repos.d]<span class="comment"># mkdir bak   #创建备份文件夹</span></span><br><span class="line">[root@smh yum.repos.d]<span class="comment"># ls</span></span><br><span class="line">bak  redhat.repo  yum.repo</span><br><span class="line">[root@smh yum.repos.d]<span class="comment"># mv  redhat.repo  ./bak/  将原有的yum文件剪切到备份文件夹</span></span><br><span class="line">[root@smh yum.repos.d]<span class="comment"># vim yum.repo  #新建yum文件</span></span><br><span class="line">[yum]</span><br><span class="line">name=yum</span><br><span class="line">baseurl=file:///JingXiang    <span class="comment">#文件的挂载点,如果是网络yum,则是ftp://132.46.122.241/pub/服务器的挂载点</span></span><br><span class="line"><span class="built_in">enable</span>=1</span><br><span class="line">gpgcheck=0</span><br><span class="line">[root@smh yum.repos.d]<span class="comment"># yum clean all  #清理yum源缓存</span></span><br><span class="line">[root@smh yum.repos.d]<span class="comment"># yum makecache  #重建本地yum源</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小靖
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2021/09/03/%E5%90%84%E7%A7%8D%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/" title="Linux基础命令">http://example.com/2021/09/03/各种操作命令/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i></a>
+          </div>
+
+        
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
+</div>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/30/Docker%E5%AE%89%E8%A3%85/" rel="next" title="Docker安装">
+      Docker安装 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4"><span class="nav-text">linux系统命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%91%BD%E4%BB%A4"><span class="nav-text">用户命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4-1"><span class="nav-text">linux系统命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E7%9B%98%E5%91%BD%E4%BB%A4"><span class="nav-text">硬盘命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E7%9B%98%E5%88%86%E5%8C%BA-%E6%A0%BC%E5%BC%8F%E5%8C%96-%E6%8C%82%E8%BD%BD-%E5%A4%A7%E4%BA%8E2T"><span class="nav-text">硬盘分区,格式化,挂载 (大于2T)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E7%9B%98%E5%88%86%E5%8C%BA-%E6%A0%BC%E5%BC%8F%E5%8C%96-%E6%8C%82%E8%BD%BD-%E5%B0%8F%E4%BA%8E2T"><span class="nav-text">硬盘分区,格式化,挂载 (小于2T)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9sftp%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8F%B7"><span class="nav-text">修改sftp的端口号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-text">脚本修改配置文件内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centos-%E8%BF%9B%E5%8D%95%E7%94%A8%E6%88%B7%E6%A8%A1%E5%BC%8F"><span class="nav-text">centos 进单用户模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEbond%E4%B8%BB%E5%A4%87%E6%A8%A1%E5%BC%8F"><span class="nav-text">配置bond主备模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AEyum%E6%BA%90"><span class="nav-text">挂载本地镜像文件设置yum源</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小靖"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">小靖</p>
+  <div class="site-description" itemprop="description">直到这一刻微笑着说话为止，我至少留下了一公升眼泪</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/JingAAIT?spm=1001.2014.3001.5343" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;JingAAIT?spm&#x3D;1001.2014.3001.5343" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.51cto.com/u_14661501" title="51CTO → https:&#x2F;&#x2F;blog.51cto.com&#x2F;u_14661501" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>51CTO</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小靖</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">26k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
