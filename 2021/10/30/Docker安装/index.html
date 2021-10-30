@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言什么是docker：docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。简言之，就是可以在Linux上镜像使用的这么一个容器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker安装">
+<meta property="og:url" content="http://example.com/2021/10/30/Docker%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="XiaoJing">
+<meta property="og:description" content="前言什么是docker：docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。简言之，就是可以在Linux上镜像使用的这么一个容器。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-30T09:24:00.531Z">
+<meta property="article:modified_time" content="2021-10-30T09:31:44.844Z">
+<meta property="article:author" content="小靖">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/10/30/Docker%E5%AE%89%E8%A3%85/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Docker安装 | XiaoJing</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">XiaoJing</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活中的点点滴滴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/30/Docker%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="小靖">
+      <meta itemprop="description" content="直到这一刻微笑着说话为止，我至少留下了一公升眼泪">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="XiaoJing">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker安装
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-30 17:24:00 / 修改时间：17:31:44" itemprop="dateCreated datePublished" datetime="2021-10-30T17:24:00+08:00">2021-10-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.3k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>什么是docker：</strong>docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。简言之，就是可以在Linux上镜像使用的这么一个容器。</p>
+<span id="more"></span>
+
+<h1 id="docker安装步骤（国内安装）"><a href="#docker安装步骤（国内安装）" class="headerlink" title="docker安装步骤（国内安装）"></a>docker安装步骤（国内安装）</h1><h2 id="在阿里云官方下载docker-ce"><a href="#在阿里云官方下载docker-ce" class="headerlink" title="在阿里云官方下载docker-ce"></a>在阿里云官方下载docker-ce</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//安装必要的一些系统工具：sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">//添加软件源信息：sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line">//更新并安装docker-CE：sudo yum makecache fast</span><br><span class="line">sudo yum -y install docker-ce</span><br><span class="line">//开启docker服务：sudo service docker start</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装完成之后查看仓库是否有docker-ce-repo"><a href="#安装完成之后查看仓库是否有docker-ce-repo" class="headerlink" title="安装完成之后查看仓库是否有docker-ce.repo"></a>安装完成之后查看仓库是否有docker-ce.repo</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># ls /etc/yum.repos.d/</span></span><br><span class="line">CentOS-Base.repo         CentOS-CR.repo         CentOS-fasttrack.repo  CentOS-Sources.repo  docker-ce.repo</span><br><span class="line">CentOS-Base.repo.backup  CentOS-Debuginfo.repo  CentOS-Media.repo      CentOS-Vault.repo</span><br></pre></td></tr></table></figure>
+
+<h2 id="确认之后下载插件并做好缓存（这里是我下载好的截图）"><a href="#确认之后下载插件并做好缓存（这里是我下载好的截图）" class="headerlink" title="确认之后下载插件并做好缓存（这里是我下载好的截图）"></a>确认之后下载插件并做好缓存（这里是我下载好的截图）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># yum repolist </span></span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: mirrors.aliyun.com</span><br><span class="line"> * extras: mirrors.aliyun.com</span><br><span class="line"> * updates: mirrors.aliyun.com</span><br><span class="line">repo id                                             repo name                                                          status</span><br><span class="line">!base/7/x86_64                                      CentOS-7 - Base - mirrors.aliyun.com                               10,070</span><br><span class="line">!docker-ce-stable/x86_64                            Docker CE Stable - x86_64                                              79</span><br><span class="line">!extras/7/x86_64                                    CentOS-7 - Extras - mirrors.aliyun.com                                413</span><br><span class="line">!updates/7/x86_64                                   CentOS-7 - Updates - mirrors.aliyun.com                             1,112</span><br><span class="line">repolist: 11,674</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># yum makecache </span></span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: mirrors.aliyun.com</span><br><span class="line"> * extras: mirrors.aliyun.com</span><br><span class="line"> * updates: mirrors.aliyun.com</span><br><span class="line">base                                                                                                  | 3.6 kB  00:00:00     </span><br><span class="line">docker-ce-stable                                                                                      | 3.5 kB  00:00:00     </span><br><span class="line">extras                                                                                                | 2.9 kB  00:00:00     </span><br><span class="line">updates                                                                                               | 2.9 kB  00:00:00     </span><br><span class="line">Metadata Cache Created</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看docker可用版本"><a href="#查看docker可用版本" class="headerlink" title="查看docker可用版本"></a>查看docker可用版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># yum list docker-ce.x86_64 --showduplicates | sort -r</span></span><br><span class="line">[root@localhost ~]<span class="comment"># yum list docker-ce.x86_64 --showduplicates | sort -r</span></span><br><span class="line"> * updates: mirrors.aliyun.com</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Installed Packages</span><br><span class="line"> * extras: mirrors.aliyun.com</span><br><span class="line">docker-ce.x86_64            3:19.03.9-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.8-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.7-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.6-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.5-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.4-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.3-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.2-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.1-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.12-3.el7                   docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.12-3.el7                   @docker-ce-stable</span><br><span class="line">docker-ce.x86_64            3:19.03.11-3.el7                   docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.10-3.el7                   docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:19.03.0-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:18.09.9-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:18.09.8-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:18.09.7-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:18.09.6-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:18.09.5-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:18.09.4-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:18.09.3-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:18.09.2-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:18.09.1-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            3:18.09.0-3.el7                    docker-ce-stable </span><br><span class="line">docker-ce.x86_64            18.06.3.ce-3.el7                   docker-ce-stable </span><br><span class="line">docker-ce.x86_64            18.06.2.ce-3.el7                   docker-ce-stable </span><br><span class="line">docker-ce.x86_64            18.06.1.ce-3.el7                   docker-ce-stable </span><br><span class="line">docker-ce.x86_64            18.06.0.ce-3.el7                   docker-ce-stable </span><br><span class="line">docker-ce.x86_64            18.03.1.ce-1.el7.centos            docker-ce-stable </span><br><span class="line">docker-ce.x86_64            18.03.0.ce-1.el7.centos            docker-ce-stable </span><br><span class="line">docker-ce.x86_64            17.12.1.ce-1.el7.centos            docker-ce-stable </span><br><span class="line">docker-ce.x86_64            17.12.0.ce-1.el7.centos            docker-ce-stable </span><br><span class="line">docker-ce.x86_64            17.09.1.ce-1.el7.centos            docker-ce-stable </span><br><span class="line">docker-ce.x86_64            17.09.0.ce-1.el7.centos            docker-ce-stable </span><br><span class="line">docker-ce.x86_64            17.06.2.ce-1.el7.centos            docker-ce-stable </span><br><span class="line">docker-ce.x86_64            17.06.1.ce-1.el7.centos            docker-ce-stable </span><br><span class="line">docker-ce.x86_64            17.06.0.ce-1.el7.centos            docker-ce-stable </span><br><span class="line">docker-ce.x86_64            17.03.3.ce-1.el7                   docker-ce-stable </span><br><span class="line">docker-ce.x86_64            17.03.2.ce-1.el7.centos            docker-ce-stable </span><br><span class="line">docker-ce.x86_64            17.03.1.ce-1.el7.centos            docker-ce-stable </span><br><span class="line">docker-ce.x86_64            17.03.0.ce-1.el7.centos            docker-ce-stable </span><br><span class="line"> * base: mirrors.aliyun.com</span><br><span class="line">Available Packages</span><br></pre></td></tr></table></figure>
+
+<h2 id="这里我们下载18-9-0，注意并没有采用阿里云官方推荐的方法，我们分别下载了docker-ce，docker-ce-cli和containerd-io这三个组件"><a href="#这里我们下载18-9-0，注意并没有采用阿里云官方推荐的方法，我们分别下载了docker-ce，docker-ce-cli和containerd-io这三个组件" class="headerlink" title="这里我们下载18.9.0，注意并没有采用阿里云官方推荐的方法，我们分别下载了docker-ce，docker-ce-cli和containerd.io这三个组件"></a>这里我们下载18.9.0，注意并没有采用阿里云官方推荐的方法，我们分别下载了docker-ce，docker-ce-cli和containerd.io这三个组件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># yum -y install docker-ce-18.09.0-3.el7   docker-ce-cli-18.09.0-3.el7  containerd.io-1.2.13-3.2.el7</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="开启docker服务并加入开机自启"><a href="#开启docker服务并加入开机自启" class="headerlink" title="开启docker服务并加入开机自启"></a>开启docker服务并加入开机自启</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># systemctl  start  docker</span></span><br><span class="line">[root@localhost ~]<span class="comment"># systemctl  enable  docker</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="安装完成之后查看docker版本信息"><a href="#安装完成之后查看docker版本信息" class="headerlink" title="安装完成之后查看docker版本信息"></a>安装完成之后查看docker版本信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># docker -v   //只查看client版本</span></span><br><span class="line">Docker version 19.03.12, build 48a66213fe</span><br><span class="line">[root@localhost ~]<span class="comment"># docker  version  //查看docker的详细信息</span></span><br><span class="line">Client: Docker Engine - Community</span><br><span class="line"> Version:           19.03.12</span><br><span class="line"> API version:       1.40</span><br><span class="line"> Go version:        go1.13.10</span><br><span class="line"> Git commit:        48a66213fe</span><br><span class="line"> Built:             Mon Jun 22 15:46:54 2020</span><br><span class="line"> OS/Arch:           linux/amd64</span><br><span class="line"> Experimental:      <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">Server: Docker Engine - Community</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          19.03.12</span><br><span class="line">  API version:      1.40 (minimum version 1.12)</span><br><span class="line">  Go version:       go1.13.10</span><br><span class="line">  Git commit:       48a66213fe</span><br><span class="line">  Built:            Mon Jun 22 15:45:28 2020</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     <span class="literal">false</span></span><br><span class="line"> containerd:</span><br><span class="line">  Version:          1.2.13</span><br><span class="line">  GitCommit:        7ad184331fa3e55e52b890ea95e65ba581ae3429</span><br><span class="line"> runc:</span><br><span class="line">  Version:          1.0.0-rc10</span><br><span class="line">  GitCommit:        dc9208a3303feef5b3839f4323d9beb36df0a9dd</span><br><span class="line"> docker-init:</span><br><span class="line">  Version:          0.18.0</span><br><span class="line">  GitCommit:        fec3683</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看完成之后我们的docker下载镜像是很慢的，我们设置一个国内的加速器"><a href="#查看完成之后我们的docker下载镜像是很慢的，我们设置一个国内的加速器" class="headerlink" title="查看完成之后我们的docker下载镜像是很慢的，我们设置一个国内的加速器"></a>查看完成之后我们的docker下载镜像是很慢的，我们设置一个国内的加速器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s https://mf1x1wnc.mirror.aliyuncs.com   //设置阿里云镜像站</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用后台守护进程开启镜像加速，重启docker，查看docker信息"><a href="#使用后台守护进程开启镜像加速，重启docker，查看docker信息" class="headerlink" title="使用后台守护进程开启镜像加速，重启docker，查看docker信息"></a>使用后台守护进程开启镜像加速，重启docker，查看docker信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># systemctl daemon-reload</span></span><br><span class="line">[root@localhost ~]<span class="comment"># systemctl restart docker</span></span><br><span class="line">[root@localhost ~]<span class="comment"># docker info</span></span><br><span class="line">Client:</span><br><span class="line"> Debug Mode: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">Server:</span><br><span class="line"> Containers: 1</span><br><span class="line">  Running: 1</span><br><span class="line">  Paused: 0</span><br><span class="line">  Stopped: 0</span><br><span class="line"> Images: 3</span><br><span class="line"> Server Version: 19.03.12</span><br><span class="line"> Storage Driver: overlay2</span><br><span class="line">  Backing Filesystem: xfs</span><br><span class="line">  Supports d_type: <span class="literal">true</span></span><br><span class="line">  Native Overlay Diff: <span class="literal">true</span></span><br><span class="line"> Logging Driver: json-file</span><br><span class="line"> Cgroup Driver: cgroupfs</span><br><span class="line"> Plugins:</span><br><span class="line">  Volume: <span class="built_in">local</span></span><br><span class="line">  Network: bridge host ipvlan macvlan null overlay</span><br><span class="line">  Log: awslogs fluentd gcplogs gelf journald json-file <span class="built_in">local</span> logentries splunk syslog</span><br><span class="line"> Swarm: inactive</span><br><span class="line"> Runtimes: runc</span><br><span class="line"> Default Runtime: runc</span><br><span class="line"> Init Binary: docker-init</span><br><span class="line"> containerd version: 7ad184331fa3e55e52b890ea95e65ba581ae3429</span><br><span class="line"> runc version: dc9208a3303feef5b3839f4323d9beb36df0a9dd</span><br><span class="line"> init version: fec3683</span><br><span class="line"> Security Options:</span><br><span class="line">  seccomp</span><br><span class="line">   Profile: default</span><br><span class="line"> Kernel Version: 3.10.0-862.el7.x86_64</span><br><span class="line"> Operating System: CentOS Linux 7 (Core)</span><br><span class="line"> OSType: linux</span><br><span class="line"> Architecture: x86_64</span><br><span class="line"> CPUs: 2</span><br><span class="line"> Total Memory: 1.779GiB</span><br><span class="line"> Name: localhost.localdomain</span><br><span class="line"> ID: QSMS:KA7E:XN2A:RR72:SGDQ:43FO:S43Q:BKT4:RSGT:S6HS:6TC4:GTL7</span><br><span class="line"> Docker Root Dir: /var/lib/docker</span><br><span class="line"> Debug Mode: <span class="literal">false</span></span><br><span class="line"> Registry: https://index.docker.io/v1/</span><br><span class="line"> Labels:</span><br><span class="line"> Experimental: <span class="literal">false</span></span><br><span class="line"> Insecure Registries:</span><br><span class="line">  192.168.1.100:5000</span><br><span class="line">  127.0.0.0/8</span><br><span class="line"> Registry Mirrors:</span><br><span class="line">  https://mf1x1wnc.mirror.aliyuncs.com/   //已更改为阿里云镜像站</span><br><span class="line"> Live Restore Enabled: <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小靖
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2021/10/30/Docker%E5%AE%89%E8%A3%85/" title="Docker安装">http://example.com/2021/10/30/Docker安装/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i></a>
+          </div>
+
+        
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
+</div>
+
+        
+      </footer>
+    
+  </article>
+
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4%EF%BC%88%E5%9B%BD%E5%86%85%E5%AE%89%E8%A3%85%EF%BC%89"><span class="nav-text">docker安装步骤（国内安装）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%98%E6%96%B9%E4%B8%8B%E8%BD%BDdocker-ce"><span class="nav-text">在阿里云官方下载docker-ce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%E6%9F%A5%E7%9C%8B%E4%BB%93%E5%BA%93%E6%98%AF%E5%90%A6%E6%9C%89docker-ce-repo"><span class="nav-text">安装完成之后查看仓库是否有docker-ce.repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AE%E8%AE%A4%E4%B9%8B%E5%90%8E%E4%B8%8B%E8%BD%BD%E6%8F%92%E4%BB%B6%E5%B9%B6%E5%81%9A%E5%A5%BD%E7%BC%93%E5%AD%98%EF%BC%88%E8%BF%99%E9%87%8C%E6%98%AF%E6%88%91%E4%B8%8B%E8%BD%BD%E5%A5%BD%E7%9A%84%E6%88%AA%E5%9B%BE%EF%BC%89"><span class="nav-text">确认之后下载插件并做好缓存（这里是我下载好的截图）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bdocker%E5%8F%AF%E7%94%A8%E7%89%88%E6%9C%AC"><span class="nav-text">查看docker可用版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E9%87%8C%E6%88%91%E4%BB%AC%E4%B8%8B%E8%BD%BD18-9-0%EF%BC%8C%E6%B3%A8%E6%84%8F%E5%B9%B6%E6%B2%A1%E6%9C%89%E9%87%87%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%98%E6%96%B9%E6%8E%A8%E8%8D%90%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%8C%E6%88%91%E4%BB%AC%E5%88%86%E5%88%AB%E4%B8%8B%E8%BD%BD%E4%BA%86docker-ce%EF%BC%8Cdocker-ce-cli%E5%92%8Ccontainerd-io%E8%BF%99%E4%B8%89%E4%B8%AA%E7%BB%84%E4%BB%B6"><span class="nav-text">这里我们下载18.9.0，注意并没有采用阿里云官方推荐的方法，我们分别下载了docker-ce，docker-ce-cli和containerd.io这三个组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AFdocker%E6%9C%8D%E5%8A%A1%E5%B9%B6%E5%8A%A0%E5%85%A5%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="nav-text">开启docker服务并加入开机自启</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%E6%9F%A5%E7%9C%8Bdocker%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-text">安装完成之后查看docker版本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%E6%88%91%E4%BB%AC%E7%9A%84docker%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F%E6%98%AF%E5%BE%88%E6%85%A2%E7%9A%84%EF%BC%8C%E6%88%91%E4%BB%AC%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E5%9B%BD%E5%86%85%E7%9A%84%E5%8A%A0%E9%80%9F%E5%99%A8"><span class="nav-text">查看完成之后我们的docker下载镜像是很慢的，我们设置一个国内的加速器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%90%8E%E5%8F%B0%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E5%BC%80%E5%90%AF%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%EF%BC%8C%E9%87%8D%E5%90%AFdocker%EF%BC%8C%E6%9F%A5%E7%9C%8Bdocker%E4%BF%A1%E6%81%AF"><span class="nav-text">使用后台守护进程开启镜像加速，重启docker，查看docker信息</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小靖"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">小靖</p>
+  <div class="site-description" itemprop="description">直到这一刻微笑着说话为止，我至少留下了一公升眼泪</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/JingAAIT?spm=1001.2014.3001.5343" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;JingAAIT?spm&#x3D;1001.2014.3001.5343" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.51cto.com/u_14661501" title="51CTO → https:&#x2F;&#x2F;blog.51cto.com&#x2F;u_14661501" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>51CTO</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小靖</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">6k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
