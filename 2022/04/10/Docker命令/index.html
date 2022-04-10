@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="前言Ubuntu Linux是由南非人马克·沙特尔沃思(Mark Shuttleworth)创办的基于Debian Linux的操作系统，于2004年10月公布Ubuntu的第一个版本(Ubuntu 4.10“Warty Warthog”)。Ubuntu适用于笔记本电脑、桌面电脑和服务器，特别是为桌面用户提供尽善尽美的使用体验。Ubuntu几乎包含了所有常用的应用软件：文字处理、电子邮件、软件开发">
+  <meta name="description" content="前言什么是docker：docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。简言之，就是可以在Linux上镜像使用的这么一个容器。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ubuntu">
-<meta property="og:url" content="http://example.com/2021/10/30/ubuntu%2018%20%E7%89%88%E6%9C%AC/index.html">
+<meta property="og:title" content="Docker命令">
+<meta property="og:url" content="http://example.com/2022/04/10/Docker%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="XiaoJing">
-<meta property="og:description" content="前言Ubuntu Linux是由南非人马克·沙特尔沃思(Mark Shuttleworth)创办的基于Debian Linux的操作系统，于2004年10月公布Ubuntu的第一个版本(Ubuntu 4.10“Warty Warthog”)。Ubuntu适用于笔记本电脑、桌面电脑和服务器，特别是为桌面用户提供尽善尽美的使用体验。Ubuntu几乎包含了所有常用的应用软件：文字处理、电子邮件、软件开发">
+<meta property="og:description" content="前言什么是docker：docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。简言之，就是可以在Linux上镜像使用的这么一个容器。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-10-30T10:05:27.646Z">
-<meta property="article:modified_time" content="2021-10-31T02:18:35.643Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/aa2936303d1241f9bb2c6741b2392f14.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASmluZ0FBSVQ=,size_19,color_FFFFFF,t_70,g_se,x_16">
+<meta property="article:published_time" content="2022-04-10T11:11:59.620Z">
+<meta property="article:modified_time" content="2022-04-10T11:36:27.754Z">
 <meta property="article:author" content="小靖">
-<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/aa2936303d1241f9bb2c6741b2392f14.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASmluZ0FBSVQ=,size_19,color_FFFFFF,t_70,g_se,x_16">
 
-<link rel="canonical" href="http://example.com/2021/10/30/ubuntu%2018%20%E7%89%88%E6%9C%AC/">
+<link rel="canonical" href="http://example.com/2022/04/10/Docker%E5%91%BD%E4%BB%A4/">
 
 
 <script id="page-configurations">
@@ -46,7 +48,7 @@
   };
 </script>
 
-  <title>Ubuntu | XiaoJing</title>
+  <title>Docker命令 | XiaoJing</title>
   
 
 
@@ -167,7 +169,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/30/ubuntu%2018%20%E7%89%88%E6%9C%AC/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/10/Docker%E5%91%BD%E4%BB%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -180,7 +182,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Ubuntu
+          Docker命令
         </h1>
 
         <div class="post-meta">
@@ -189,23 +191,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-10-30 18:05:27" itemprop="dateCreated datePublished" datetime="2021-10-30T18:05:27+08:00">2021-10-30</time>
+              <time title="创建时间：2022-04-10 19:11:59 / 修改时间：19:36:27" itemprop="dateCreated datePublished" datetime="2022-04-10T19:11:59+08:00">2022-04-10</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-31 10:18:35" itemprop="dateModified" datetime="2021-10-31T10:18:35+08:00">2021-10-31</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ubuntu/" itemprop="url" rel="index"><span itemprop="name">Ubuntu</span></a>
+                  <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
                 </span>
             </span>
 
@@ -222,7 +218,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>852</span>
+              <span>1.1k</span>
             </span>
 
         </div>
@@ -235,13 +231,12 @@
 
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>Ubuntu Linux</strong>是由南非人马克·沙特尔沃思(Mark Shuttleworth)创办的基于Debian Linux的操作系统，于2004年10月公布Ubuntu的第一个版本(Ubuntu 4.10“Warty Warthog”)。Ubuntu适用于笔记本电脑、桌面电脑和服务器，特别是为桌面用户提供尽善尽美的使用体验。Ubuntu几乎包含了所有常用的应用软件：文字处理、电子邮件、软件开发工具和Web服务等。用户下载、使用、分享Ubuntu系统，以及获得技术支持与服务，无需支付任何许可费用。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>什么是docker：</strong>docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。简言之，就是可以在Linux上镜像使用的这么一个容器。</p>
 <span id="more"></span>
 
-<h2 id="乌班图双网卡绑定-主备模式"><a href="#乌班图双网卡绑定-主备模式" class="headerlink" title="乌班图双网卡绑定(主备模式)"></a>乌班图双网卡绑定(主备模式)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">/etc/netplan/00-installer-config.yaml</span><br><span class="line">sudo netplan apply  <span class="comment">#应用配置文件</span></span><br><span class="line"></span><br><span class="line">network:</span><br><span class="line">    version: 2</span><br><span class="line">    ethernets:</span><br><span class="line">        ens33:</span><br><span class="line">           dhcp4: no</span><br><span class="line">           dhcp6: no</span><br><span class="line">        ens38:</span><br><span class="line">           dhcp4: no</span><br><span class="line">           dhcp6: no</span><br><span class="line"></span><br><span class="line">    bonds:</span><br><span class="line">           bond0:</span><br><span class="line">              interfaces:</span><br><span class="line">              - ens33</span><br><span class="line">              - ens38</span><br><span class="line">              parameters:</span><br><span class="line">                    mode: active-backup  <span class="comment">#主备</span></span><br><span class="line">                    mii-monitor-interval: 100</span><br><span class="line">    bridges:</span><br><span class="line">        br0:</span><br><span class="line">            dhcp4: no</span><br><span class="line">            dhcp6: no</span><br><span class="line">            addresses: [192.168.126.135/24]</span><br><span class="line">            gateway4: 192.168.126.2</span><br><span class="line">            nameservers:</span><br><span class="line">              addresses: [223.5.5.5,223.6.6.6]</span><br><span class="line">            interfaces:</span><br><span class="line">                - bond0</span><br></pre></td></tr></table></figure>
+<h1 id="Docker命令"><a href="#Docker命令" class="headerlink" title="Docker命令"></a>Docker命令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">查找镜像：docker  search  镜像名称</span><br><span class="line"></span><br><span class="line">拉取镜像：docker  pull    镜像名称</span><br><span class="line"></span><br><span class="line">上传镜像：docker  push    镜像名称</span><br><span class="line"></span><br><span class="line">镜像导出至本地：docker  save &gt; 自定义名称   镜像名称 / docker  save  -o   自定义名称  镜像名称</span><br><span class="line"></span><br><span class="line">本地镜像包导入镜像：docker  load &lt;  镜像名称   /  docker load  -i  镜像名称</span><br><span class="line"></span><br><span class="line">查看本地镜像：docker images </span><br><span class="line">（PS：虽然我们看到的镜像标签为latest（最新的），但并不代表它一定是最新的，而且镜像如果没有写标签，默认以latest为标签）</span><br><span class="line"></span><br><span class="line">删除镜像：docker  rmi  镜像名称</span><br><span class="line"></span><br><span class="line">查看容器：docker  ps  -a （所有容器）</span><br><span class="line"></span><br><span class="line">删除容器：docker  rm   容器名称/ID</span><br><span class="line"></span><br><span class="line">停止容器：docker  stop  容器名称/ID</span><br><span class="line"></span><br><span class="line">启动容器：docker start  容器名称/ID</span><br><span class="line"></span><br><span class="line">强制删除正在运行的容器：docker  rm  容器名称/ID  -f</span><br><span class="line"></span><br><span class="line">强制删除/停止/启动所有的容器：docker ps -a -q | xargs  docker  rm/stop/start  -f （生产环境严禁使用）</span><br><span class="line"></span><br><span class="line">运行一个容器：docker run  -itd  --name  容器名称  镜像名称</span><br><span class="line">---------------</span><br><span class="line">I:可交互</span><br><span class="line">t:用来模拟一个伪终端</span><br><span class="line">d:保持后台运行</span><br><span class="line">name:给容器起的名称</span><br><span class="line">--restart=always:始终保持运行（随着docker开启而运行）</span><br><span class="line">---------------</span><br><span class="line"></span><br><span class="line">进入一个容器：docker  <span class="built_in">exec</span>   -it 容器名称  /bin/sh   |   docker  attach   容器名称</span><br><span class="line">---------------</span><br><span class="line"><span class="built_in">exec</span>进入的方式需要添加-i -t选项，后边还需要给容器一个shell环境</span><br><span class="line"><span class="built_in">exec</span>进入的方式，如果执行<span class="built_in">exit</span>退出，容器依然保持运行</span><br><span class="line"><span class="built_in">exec</span>进入的方法，会生产新的进程</span><br><span class="line">Attach如果执行<span class="built_in">exit</span>退出，容器会被关闭，如果想要保持容器不被关闭，可以使用键盘：ctrl+p ctrl+q 可以实现</span><br><span class="line">Attach不会生成新的进程</span><br><span class="line">---------------</span><br><span class="line"></span><br><span class="line">将容器做成镜像：docker commit  -t 容器名称   镜像名称</span><br><span class="line"></span><br><span class="line">查看原生网络：docker  network  ls</span><br><span class="line"></span><br><span class="line">查看名称空间：<span class="built_in">echo</span>  $$  查看进程编号  PId |  <span class="built_in">cd</span>  /proc/进程PID/ns/</span><br></pre></td></tr></table></figure>
 
-<h2 id="乌班图基本命令"><a href="#乌班图基本命令" class="headerlink" title="乌班图基本命令"></a>乌班图基本命令</h2><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ifconfig</span> ens<span class="number">33</span> down/up   开启或断开网卡</span><br><span class="line"></span><br><span class="line"><span class="attribute">sudo</span> passwd root   更改root初始密码</span><br><span class="line"></span><br><span class="line"><span class="attribute">sudo</span> ufw enable  开启防火墙</span><br><span class="line"><span class="attribute">sudo</span> ufw disable 关闭防火墙</span><br><span class="line"><span class="attribute">sudo</span> ufw status  查看防火墙状态</span><br><span class="line"><span class="attribute">sudo</span> ufw <span class="literal">allow</span> <span class="number">22</span>  开放端口</span><br><span class="line"></span><br><span class="line"><span class="attribute">cat</span> /proc/net/bonding/bond<span class="number">0</span>  查看bond</span><br></pre></td></tr></table></figure>
-
+<h2 id="运行图"><a href="#运行图" class="headerlink" title="运行图"></a>运行图</h2><p><img src="https://img-blog.csdnimg.cn/aa2936303d1241f9bb2c6741b2392f14.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASmluZ0FBSVQ=,size_19,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
 
     </div>
 
@@ -257,7 +252,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2021/10/30/ubuntu%2018%20%E7%89%88%E6%9C%AC/" title="Ubuntu">http://example.com/2021/10/30/ubuntu 18 版本/</a>
+    <a href="http://example.com/2022/04/10/Docker%E5%91%BD%E4%BB%A4/" title="Docker命令">http://example.com/2022/04/10/Docker命令/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -268,7 +263,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Ubuntu/" rel="tag"><i class="fa fa-tag"></i></a>
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i></a>
           </div>
 
         
@@ -287,13 +282,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/10/30/Docker%E5%AE%89%E8%A3%85/" rel="prev" title="Docker安装">
-      <i class="fa fa-chevron-left"></i> Docker安装
+    <a href="/2022/04/10/Docker%E6%9E%B6%E6%9E%84%E6%A6%82%E5%BF%B5/" rel="prev" title="Docker架构概念">
+      <i class="fa fa-chevron-left"></i> Docker架构概念
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/10/30/Jenkins+Gitlab+K8s/" rel="next" title="Jenkins+Gitlab+K8s">
-      Jenkins+Gitlab+K8s <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -353,7 +345,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%8C%E7%8F%AD%E5%9B%BE%E5%8F%8C%E7%BD%91%E5%8D%A1%E7%BB%91%E5%AE%9A-%E4%B8%BB%E5%A4%87%E6%A8%A1%E5%BC%8F"><span class="nav-text">乌班图双网卡绑定(主备模式)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%8C%E7%8F%AD%E5%9B%BE%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">乌班图基本命令</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker%E5%91%BD%E4%BB%A4"><span class="nav-text">Docker命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%9B%BE"><span class="nav-text">运行图</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
