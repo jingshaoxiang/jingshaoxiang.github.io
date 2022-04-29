@@ -1,74 +1,11 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta name="description" content="前言Jinkins： 是一个开源的、提供友好操作界面的持续集成(CI)工具，起源于Hudson（Hudson是商用的），主要用于持续、自动的构建&#x2F;测试软件项目、监控外部任务的运行（这个比较抽象，暂且写上，不做解释）。Jenkins用Java语言编写，可在Tomcat等流行的servlet容器中运行，也可独立运行。通常与版本管理工具(SCM)、构建工具结合使用。常用的版本控制工具有SVN、GIT，构">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Jenkins+Gitlab+K8s | XiaoJing</title><meta name="keywords" content="K8s,Jenkins,Gitlab"><meta name="author" content="小靖"><meta name="copyright" content="小靖"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言Jinkins： 是一个开源的、提供友好操作界面的持续集成(CI)工具，起源于Hudson（Hudson是商用的），主要用于持续、自动的构建&#x2F;测试软件项目、监控外部任务的运行（这个比较抽象，暂且写上，不做解释）。Jenkins用Java语言编写，可在Tomcat等流行的servlet容器中运行，也可独立运行。通常与版本管理工具(SCM)、构建工具结合使用。常用的版本控制工具有SVN、GIT，构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jenkins+Gitlab+K8s">
 <meta property="og:url" content="http://example.com/2021/10/30/Jenkins+Gitlab+K8s/index.html">
 <meta property="og:site_name" content="XiaoJing">
 <meta property="og:description" content="前言Jinkins： 是一个开源的、提供友好操作界面的持续集成(CI)工具，起源于Hudson（Hudson是商用的），主要用于持续、自动的构建&#x2F;测试软件项目、监控外部任务的运行（这个比较抽象，暂且写上，不做解释）。Jenkins用Java语言编写，可在Tomcat等流行的servlet容器中运行，也可独立运行。通常与版本管理工具(SCM)、构建工具结合使用。常用的版本控制工具有SVN、GIT，构">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201019151257968.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201019154620896.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201019155309841.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201019155550233.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201019155338487.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201019160344137.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201019162157377.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201019162252779.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020154552652.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020155217427.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020102015541533.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020102015571911.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020102015585414.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020160113750.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020160306511.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020160720745.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020160818906.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020160928617.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020161040368.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020161318859.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020161454627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020161646467.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020161916370.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020162009296.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020162101525.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020162202550.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020162303881.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020162527689.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020102016294449.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020163123727.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020163218683.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020163323330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020163434468.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020163532549.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020163745747.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020163653576.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020102016391942.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020164242323.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020165230132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020165420695.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020165513409.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020165601697.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
 <meta property="article:published_time" content="2021-10-30T10:05:27.648Z">
 <meta property="article:modified_time" content="2021-10-31T01:59:56.053Z">
 <meta property="article:author" content="小靖">
@@ -76,219 +13,138 @@
 <meta property="article:tag" content="Jenkins">
 <meta property="article:tag" content="Gitlab">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201019151257968.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center">
-
-<link rel="canonical" href="http://example.com/2021/10/30/Jenkins+Gitlab+K8s/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
-
-  <title>Jenkins+Gitlab+K8s | XiaoJing</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/10/30/Jenkins+Gitlab+K8s/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Jenkins+Gitlab+K8s',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-10-31 09:59:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-</head>
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">XiaoJing</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-      <p class="site-subtitle" itemprop="description">谁都会犯错误， 所以人们才在铅笔的另一头装上橡皮</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
   
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/30/Jenkins+Gitlab+K8s/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/touxiang.jpg">
-      <meta itemprop="name" content="小靖">
-      <meta itemprop="description" content="直到这一刻微笑着说话为止，我至少留下了一公升眼泪">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="XiaoJing">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Jenkins+Gitlab+K8s
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-30 18:05:27" itemprop="dateCreated datePublished" datetime="2021-10-30T18:05:27+08:00">2021-10-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-31 09:59:56" itemprop="dateModified" datetime="2021-10-31T09:59:56+08:00">2021-10-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jenkins/" itemprop="url" rel="index"><span itemprop="name">Jenkins</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jenkins/Gitlab/" itemprop="url" rel="index"><span itemprop="name">Gitlab</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jenkins/Gitlab/K8s/" itemprop="url" rel="index"><span itemprop="name">K8s</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span><br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>9.3k</span>
-            </span>
-
-        </div>
-      </header>
-
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
     
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
     
-    
-    <div class="post-body" itemprop="articleBody">
-
-
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>Jinkins：</strong> 是一个开源的、提供友好操作界面的持续集成(CI)工具，起源于Hudson（Hudson是商用的），主要用于持续、自动的构建/测试软件项目、监控外部任务的运行（这个比较抽象，暂且写上，不做解释）。Jenkins用Java语言编写，可在Tomcat等流行的servlet容器中运行，也可独立运行。通常与版本管理工具(SCM)、构建工具结合使用。常用的版本控制工具有SVN、GIT，构建工具有Maven、Ant、Gradle。</p>
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">XiaoJing</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Jenkins+Gitlab+K8s</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-10-30T10:05:27.648Z" title="发表于 2021-10-30 18:05:27">2021-10-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-10-31T01:59:56.053Z" title="更新于 2021-10-31 09:59:56">2021-10-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Jenkins/">Jenkins</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Jenkins/Gitlab/">Gitlab</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Jenkins/Gitlab/K8s/">K8s</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Jenkins+Gitlab+K8s"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>Jinkins：</strong> 是一个开源的、提供友好操作界面的持续集成(CI)工具，起源于Hudson（Hudson是商用的），主要用于持续、自动的构建/测试软件项目、监控外部任务的运行（这个比较抽象，暂且写上，不做解释）。Jenkins用Java语言编写，可在Tomcat等流行的servlet容器中运行，也可独立运行。通常与版本管理工具(SCM)、构建工具结合使用。常用的版本控制工具有SVN、GIT，构建工具有Maven、Ant、Gradle。</p>
 <p><strong>Gitlab：</strong>是由 <a target="_blank" rel="noopener" href="https://www.leiue.com/tags/git">Git</a>Lab Inc.开发，使用 MIT 许可证的基于网络的 Git 仓库管理工具开源项目，且具有 wiki 和 issue 跟踪功能，使用 Git 作为代码管理工具，并在此基础上搭建起来的 web 服务。GitLab 由乌克兰程序员 Dmitriy Zaporozhets 和 Valery Sizov 开发，它由 Ruby 写成。后来，一些部分用 Go 语言重写</p>
 <p><strong>持续集成概念</strong></p>
 <p>持续集成Continuous Integration</p>
@@ -402,272 +258,4 @@
 <h2 id="再次查看网页的变化"><a href="#再次查看网页的变化" class="headerlink" title="再次查看网页的变化"></a>再次查看网页的变化</h2><p><img src="https://img-blog.csdnimg.cn/20201020165601697.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppbmdBQUlU,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
 <h2 id="构建的历史版本的存放目录：-data-backcode-test"><a href="#构建的历史版本的存放目录：-data-backcode-test" class="headerlink" title="构建的历史版本的存放目录：/data/backcode/test"></a>构建的历史版本的存放目录：/data/backcode/test</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@autoweb <span class="built_in">test</span>]<span class="comment"># pwd</span></span><br><span class="line">/data/backcode/<span class="built_in">test</span></span><br><span class="line">[root@autoweb <span class="built_in">test</span>]<span class="comment"># ls</span></span><br><span class="line">1  2  3  4  5</span><br><span class="line"><span class="comment">#还有一个关键的目录，这个目录下是将新代码构建成镜像的关键，他和上个目录实时同步</span></span><br><span class="line">[root@autoweb workspace]<span class="comment"># pwd</span></span><br><span class="line">/data/jenkins/workspace</span><br><span class="line">[root@autoweb workspace]<span class="comment"># ls</span></span><br><span class="line">Dockerfile  <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="测试完成"><a href="#测试完成" class="headerlink" title="测试完成"></a>测试完成</h2><h2 id="关于-kubernetes-还有好几种集群管理方法，我们这次用的-deployment模板-就是其中之一，-其他的还有pod-模板-和-rc-模板，-这些都是功能很强大的集群调度模板。-还有更多功能待开发"><a href="#关于-kubernetes-还有好几种集群管理方法，我们这次用的-deployment模板-就是其中之一，-其他的还有pod-模板-和-rc-模板，-这些都是功能很强大的集群调度模板。-还有更多功能待开发" class="headerlink" title="关于 kubernetes 还有好几种集群管理方法，我们这次用的 deployment模板 就是其中之一， 其他的还有pod 模板 和 rc 模板， 这些都是功能很强大的集群调度模板。 还有更多功能待开发"></a>关于 kubernetes 还有好几种集群管理方法，我们这次用的 deployment模板 就是其中之一， 其他的还有pod 模板 和 rc 模板， 这些都是功能很强大的集群调度模板。 还有更多功能待开发</h2>
-    </div>
-
-    
-    
-    
-        
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>小靖
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="http://example.com/2021/10/30/Jenkins+Gitlab+K8s/" title="Jenkins+Gitlab+K8s">http://example.com/2021/10/30/Jenkins+Gitlab+K8s/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/K8s/" rel="tag"><i class="fa fa-tag"></i></a>
-              <a href="/tags/Jenkins/" rel="tag"><i class="fa fa-tag"></i></a>
-              <a href="/tags/Gitlab/" rel="tag"><i class="fa fa-tag"></i></a>
-          </div>
-
-        
-
-
-<div>
-  
-    <div>
-    
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
-    
-</div>
-  
-</div>
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2021/10/30/ubuntu%2018%20%E7%89%88%E6%9C%AC/" rel="prev" title="Ubuntu">
-      <i class="fa fa-chevron-left"></i> Ubuntu
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/10/30/K8s%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/" rel="next" title="K8s集群搭建">
-      K8s集群搭建 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-
-  
-  
-  
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-text">环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%AA%8C%E8%AF%81K8s%E9%9B%86%E7%BE%A4%E6%98%AF%E5%90%A6%E6%9C%89%E9%97%AE%E9%A2%98"><span class="nav-text">开启服务器验证K8s集群是否有问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E5%9C%A8%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%AAregistry%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BB%BB%E6%84%8F%E9%80%89%E6%8B%A9%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8master%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">现在我们需要一个registry私有仓库，可以任意选择一台服务器，这个我们使用master服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8Byaml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%A9k8s%E8%87%AA%E5%B7%B1%E6%8E%A7%E5%88%B6%E5%AE%B9%E5%99%A8%E9%9B%86%E7%BE%A4%EF%BC%8C%E7%94%A8%E6%9D%A5%E6%A8%A1%E6%8B%9F%E6%88%91%E4%BB%AC%E9%83%A8%E7%BD%B2%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="nav-text">建立yaml配置文件让k8s自己控制容器集群，用来模拟我们部署的服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84ip%E5%8F%AA%E8%83%BD%E5%9C%A8%E5%AE%B9%E5%99%A8%E6%9C%AC%E6%9C%BA%E4%B8%8A%E8%AE%BF%E9%97%AE%EF%BC%8C%E9%9B%86%E7%BE%A4%E5%86%85%E7%9A%84%E5%85%B6%E4%BB%96%E4%B8%BB%E6%9C%BA%E5%92%8C%E9%9B%86%E7%BE%A4%E5%A4%96%E7%9A%84%E4%B8%BB%E6%9C%BA%E9%83%BD%E6%B2%A1%E5%8A%9E%E6%B3%95%E8%AE%BF%E9%97%AE%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%97%B6%E5%80%99%E5%B0%B1%E9%9C%80%E8%A6%81%E5%B0%86%E5%AE%B9%E5%99%A8%E7%9A%84%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84%E7%AB%AF%E5%8F%A3%E4%BA%86%EF%BC%8C%E6%89%80%E4%BB%A5%E9%9C%80%E8%A6%81%E5%81%9A%E4%B8%80%E4%B8%AAservice%E7%9A%84%E6%A8%A1%E6%9D%BF%E3%80%82service-%E6%A8%A1%E6%9D%BF%E5%8F%AF%E4%BB%A5%E5%B0%86%E5%AE%B9%E5%99%A8%E7%9A%84%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%AB%AF%E5%8F%A3%E4%B8%8A%EF%BC%8C%E5%B9%B6%E4%B8%94%E5%8F%AF%E4%BB%A5%E5%9B%BA%E5%AE%9A%E6%98%A0%E5%B0%84%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="nav-text">容器的ip只能在容器本机上访问，集群内的其他主机和集群外的主机都没办法访问，这个时候就需要将容器的端口映射到服务器上的端口了，所以需要做一个service的模板。service 模板可以将容器的端口映射到服务器的端口上，并且可以固定映射在服务器上的端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BF%E9%97%AE%E6%B5%8B%E8%AF%95%EF%BC%9A192-168-1-10-31234"><span class="nav-text">浏览器访问测试：192.168.1.10:31234</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kubernetes%E5%AE%8C%E6%AF%95%EF%BC%8C%E5%BC%80%E5%A7%8B%E9%85%8D%E5%90%88jenkins-gitlab%E8%81%94%E5%8A%A8"><span class="nav-text">kubernetes完毕，开始配合jenkins+gitlab联动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%EF%BC%88jenkins%EF%BC%89"><span class="nav-text">基本环境准备（jenkins）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Jenkins"><span class="nav-text">安装Jenkins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2tomcat%EF%BC%8C%E5%B0%86jenkins%E7%9A%84%E5%8C%85%E6%94%BE%E8%BF%9Btomcat%E9%87%8C"><span class="nav-text">部署tomcat，将jenkins的包放进tomcat里</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BF%E9%97%AE"><span class="nav-text">浏览器访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%A0%E4%B8%BA%E6%B2%A1%E6%9C%89%E5%AE%89%E8%A3%85%EF%BC%8C%E6%89%80%E4%BB%A5%E5%B0%B1%E5%AF%BC%E5%85%A5%E6%8F%92%E4%BB%B6-%E6%8F%92%E4%BB%B6%E5%AD%98%E6%94%BE%E7%9B%AE%E5%BD%95%EF%BC%9A-data-jenkins-plugins"><span class="nav-text">因为没有安装，所以就导入插件,插件存放目录：&#x2F;data&#x2F;jenkins&#x2F;plugins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8Jenkins%E6%8F%92%E4%BB%B6%E7%AE%A1%E7%90%86-%E9%AB%98%E7%BA%A7%E8%AE%BE%E7%BD%AE%E7%95%8C%E9%9D%A2%EF%BC%8C%E5%AE%9A%E4%BD%8D%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%9C%80%E5%BA%95%E9%83%A8%E4%B8%AD%E7%9A%84%E3%80%90%E5%8D%87%E7%BA%A7%E7%AB%99%E7%82%B9%E3%80%91%E6%A8%A1%E5%9D%97%EF%BC%8C%E5%B0%86%E5%AF%B9%E5%BA%94URL%E8%BE%93%E5%85%A5%E6%A1%86%E4%B8%AD%E7%9A%84url%E7%9A%84https%E4%BF%AE%E6%94%B9%E4%B8%BAhttp%EF%BC%8C%E5%8D%B3http-updates-jenkins-io-update-center-json%EF%BC%8C%E7%84%B6%E5%90%8E%E7%82%B9%E5%87%BB%E3%80%90%E6%8F%90%E4%BA%A4%E3%80%91%E4%BF%9D%E5%AD%98%E4%BF%AE%E6%94%B9%E9%A1%B9"><span class="nav-text">在Jenkins插件管理-高级设置界面，定位到页面最底部中的【升级站点】模块，将对应URL输入框中的url的https修改为http，即http:&#x2F;&#x2F;updates.jenkins.io&#x2F;update-center.json，然后点击【提交】保存修改项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%98%E9%9C%80%E8%A6%81%E5%AE%89%E8%A3%85%E4%B8%89%E4%B8%AA%E6%8F%92%E4%BB%B6"><span class="nav-text">还需要安装三个插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jenkis%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E4%BB%A5%E5%90%8E%EF%BC%8C%E5%86%8D%E5%8E%BB%E5%AE%89%E8%A3%85gitlab"><span class="nav-text">jenkis安装完成以后，再去安装gitlab</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85gitlab-ce"><span class="nav-text">安装gitlab-ce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%A0%E4%B8%BA%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98%EF%BC%8C%E5%B0%B1%E4%B8%8D%E4%BD%BF%E7%94%A8%E8%BF%99%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%8C%E5%9B%BD%E5%86%85%E7%9A%84%E7%94%A8%E6%88%B7%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E7%9A%84%E9%95%9C%E5%83%8F%E8%BF%9B%E8%A1%8C%E5%AE%89%E8%A3%85"><span class="nav-text">因为网络问题，就不使用这种方式，国内的用户，使用清华大学的镜像进行安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E9%98%B2%E6%AD%A2%E7%AB%AF%E5%8F%A3%E5%86%B2%E7%AA%81%EF%BC%8C%E9%BB%98%E8%AE%A4%E6%98%AF80%E7%AB%AF%E5%8F%A3%EF%BC%8Cunicorn%E9%BB%98%E8%AE%A4%E6%98%AF8080-%E4%B9%9F%E6%98%AFtomcat%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="nav-text">修改端口防止端口冲突，默认是80端口，unicorn默认是8080 也是tomcat的端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8gitlab%EF%BC%8C%E8%BF%99%E4%B8%AA%E8%BF%87%E7%A8%8B%E5%8F%AF%E8%83%BD%E4%BC%9A%E6%9C%89%E7%82%B9%E6%85%A2"><span class="nav-text">启动gitlab，这个过程可能会有点慢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E8%AE%BF%E9%97%AEgitlab%EF%BC%88%E7%94%A8%E6%88%B7%E5%90%8Droot%EF%BC%89"><span class="nav-text">网页访问gitlab（用户名root）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%BF%99%E4%B8%A4%E4%B8%AA%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%81%94%E5%8A%A8%EF%BC%8C%E9%9C%80%E8%A6%81%E7%BB%8F%E8%BF%87ssh%E9%AA%8C%E8%AF%81"><span class="nav-text">部署这两个服务的联动，需要经过ssh验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93"><span class="nav-text">新建一个代码仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AAnew-file"><span class="nav-text">点击新建一个new.file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%85%A5%E4%BB%A3%E7%A0%81%EF%BC%8C%E8%B5%B7%E4%B8%80%E4%B8%AA%E5%90%8D%E5%AD%97%E7%84%B6%E5%90%8E%E4%BF%9D%E5%AD%98"><span class="nav-text">写入代码，起一个名字然后保存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E9%A1%B9%E7%9B%AE%E5%85%8B%E9%9A%86%E5%88%B0%E6%9C%AC%E5%9C%B0%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E5%8F%AF%E7%94%A8"><span class="nav-text">将项目克隆到本地测试是否可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80jenkins%EF%BC%8C%E6%96%B0%E5%BB%BA%E4%BB%BB%E5%8A%A1"><span class="nav-text">打开jenkins，新建任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E9%9D%A2%E7%9A%84%E8%BF%99%E4%B8%AA%E6%8F%92%E4%BB%B6%E5%BE%88%E9%87%8D%E8%A6%81%EF%BC%8C%E5%B0%B1%E6%98%AF%E4%BB%96%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9B%B4%E6%96%B0%E7%9A%84webhook%E6%8F%92%E4%BB%B6%EF%BC%8C%E5%AE%89%E8%A3%85%E8%BF%87%E4%BA%86%E5%B0%B1%E4%BC%9A%E6%9C%89%E8%BF%99%E6%9D%A1%EF%BC%8C%E7%84%B6%E5%90%8E%E7%82%B9%E5%87%BB%E8%BF%99%E6%9D%A1%E4%B8%8B%E9%9D%A2%E5%87%BA%E6%9D%A5%E7%9A%84%E8%BF%99%E4%BA%9B%E4%B8%9C%E8%A5%BF%E4%BF%9D%E6%8C%81%E9%BB%98%E8%AE%A4%E5%B0%B1%E8%A1%8C%E3%80%82%E5%90%8C%E6%97%B6%E6%B3%A8%E6%84%8F%E5%A4%8D%E5%88%B6"><span class="nav-text">下面的这个插件很重要，就是他实现自动化更新的webhook插件，安装过了就会有这条，然后点击这条下面出来的这些东西保持默认就行。同时注意复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%AA%E9%87%8C%E9%9D%A2%E5%86%99%E7%9A%84%E6%98%AFjenkins%E6%9E%84%E5%BB%BA%E6%97%B6%E5%80%99%E4%BC%9A%E6%89%A7%E8%A1%8C%E7%9A%84shell%E8%84%9A%E6%9C%AC%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%98%AF%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%EF%BC%8C%E5%B0%B1%E6%98%AF%E4%BB%96%E5%AE%9E%E7%8E%B0%E4%BA%86%E4%B8%8B%E7%AB%AFkubernetes%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0%E5%AE%B9%E5%99%A8%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-text">这个里面写的是jenkins构建时候会执行的shell脚本，这个是最重要的，就是他实现了下端kubernetes自动更新容器的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6"><span class="nav-text">脚本文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E5%9C%B0%E5%9D%80%E5%8E%BBgitlab%E4%B8%8A%E7%BB%91%E5%AE%9Awebhook"><span class="nav-text">复制地址去gitlab上绑定webhook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%EF%BC%8C%E7%99%BB%E5%BD%95gitlab%EF%BC%8C%E7%82%B9%E5%87%BB%E4%B8%8B%E5%9B%BE%E8%BF%99%E4%B8%AA%E8%AE%BE%E7%BD%AE"><span class="nav-text">保存，登录gitlab，点击下图这个设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%80%E4%B8%8B%E6%8B%89%EF%BC%8C%E5%8E%BB%E6%8E%89ssh%E9%AA%8C%E8%AF%81%EF%BC%8C%E6%B7%BB%E5%8A%A0webhook"><span class="nav-text">往下拉，去掉ssh验证，添加webhook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0%E6%8A%A5%E9%94%99%EF%BC%8C%E6%8F%90%E7%A4%BA%E6%9C%AC%E5%9C%B0%E8%BF%9E%E6%8E%A5%E4%B8%8D%E4%BA%86%EF%BC%8C%E5%9B%A0%E4%B8%BAgitlab%E9%BB%98%E8%AE%A4%E8%AE%BE%E7%BD%AE%E4%B8%8D%E5%85%81%E8%AE%B8%E6%83%B3%E8%87%AA%E5%B7%B1%E5%8F%91%E9%80%81web-hook"><span class="nav-text">出现报错，提示本地连接不了，因为gitlab默认设置不允许想自己发送web hook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-text">解决办法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E4%B9%8B%E5%90%8E%E9%87%8D%E8%AF%95%EF%BC%8C%E6%88%90%E5%8A%9F%E7%9A%84%E5%A6%82%E4%B8%8B%E5%9B%BE%E6%89%80%E7%A4%BA"><span class="nav-text">保存之后重试，成功的如下图所示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95jenkins%E4%B8%8Egitlab%E8%BF%9E%E9%80%9A"><span class="nav-text">测试jenkins与gitlab连通</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#403%E6%8A%A5%E9%94%99%E7%9A%84%EF%BC%8C%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-text">403报错的，解决办法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0Jenkins%E5%BC%80%E5%90%AF%E5%8C%BF%E5%90%8D%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90"><span class="nav-text">回到Jenkins开启匿名访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E4%B9%8B%E5%90%8E%E5%86%8D%E7%82%B9%E5%87%BB%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE"><span class="nav-text">保存之后再点击系统设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0%E8%93%9D%E6%9D%A1%E8%AF%B4%E6%98%8Ejenkins%E5%B7%B2%E7%BB%8F%E8%BF%9E%E9%80%9Agitlab"><span class="nav-text">出现蓝条说明jenkins已经连通gitlab</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jenkins%E5%92%8Cgitlab-%E9%83%BD%E5%B7%B2%E7%BB%8F%E4%BA%92%E7%9B%B8%E7%9A%84ssh%E9%80%9A%E8%BF%87%E4%BA%86%EF%BC%8C%E7%84%B6%E5%90%8E%E6%88%91%E4%BB%AC%E6%9C%80%E5%90%8E%E9%9C%80%E8%A6%81%E5%81%9A%E7%9A%84%E4%B8%80%E4%B8%AAssh%E6%98%AF%E5%85%B3%E4%BA%8Ejenkins"><span class="nav-text">jenkins和gitlab 都已经互相的ssh通过了，然后我们最后需要做的一个ssh是关于jenkins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E9%87%8C%E6%98%AF%E4%BB%8Eautoweb%E5%90%91master%E8%8A%82%E7%82%B9%E5%81%9A%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95"><span class="nav-text">这里是从autoweb向master节点做免密登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%85%A8%E9%83%A8%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%AF%95%EF%BC%81%EF%BC%81%EF%BC%81%E5%BC%80%E5%A7%8B%E6%B5%8B%E8%AF%95"><span class="nav-text">环境全部部署完毕！！！开始测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%8B%E5%8D%B3%E6%9E%84%E5%BB%BA"><span class="nav-text">立即构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%E6%9F%A5%E7%9C%8B%E7%BD%91%E9%A1%B5%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-text">构建完成之后查看网页的变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0Gitlab%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81%E6%B5%8B%E8%AF%95"><span class="nav-text">回到Gitlab更新代码测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87web-hook%E8%BF%99%E4%B8%AA%E6%8F%92%E4%BB%B6%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E4%BB%A3%E7%A0%81%E7%9A%84%E6%9B%B4%E6%96%B0%EF%BC%8C%E7%84%B6%E5%90%8E%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E4%BF%9D%E8%AF%81%E5%AE%9E%E6%97%B6%E5%90%8C%E6%AD%A5%EF%BC%8C%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90"><span class="nav-text">通过web hook这个插件会自动识别代码的更新，然后自动构建保证实时同步，持续集成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%8D%E6%AC%A1%E6%9F%A5%E7%9C%8B%E7%BD%91%E9%A1%B5%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-text">再次查看网页的变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E7%9A%84%E5%8E%86%E5%8F%B2%E7%89%88%E6%9C%AC%E7%9A%84%E5%AD%98%E6%94%BE%E7%9B%AE%E5%BD%95%EF%BC%9A-data-backcode-test"><span class="nav-text">构建的历史版本的存放目录：&#x2F;data&#x2F;backcode&#x2F;test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%AE%8C%E6%88%90"><span class="nav-text">测试完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-kubernetes-%E8%BF%98%E6%9C%89%E5%A5%BD%E5%87%A0%E7%A7%8D%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E6%96%B9%E6%B3%95%EF%BC%8C%E6%88%91%E4%BB%AC%E8%BF%99%E6%AC%A1%E7%94%A8%E7%9A%84-deployment%E6%A8%A1%E6%9D%BF-%E5%B0%B1%E6%98%AF%E5%85%B6%E4%B8%AD%E4%B9%8B%E4%B8%80%EF%BC%8C-%E5%85%B6%E4%BB%96%E7%9A%84%E8%BF%98%E6%9C%89pod-%E6%A8%A1%E6%9D%BF-%E5%92%8C-rc-%E6%A8%A1%E6%9D%BF%EF%BC%8C-%E8%BF%99%E4%BA%9B%E9%83%BD%E6%98%AF%E5%8A%9F%E8%83%BD%E5%BE%88%E5%BC%BA%E5%A4%A7%E7%9A%84%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E6%A8%A1%E6%9D%BF%E3%80%82-%E8%BF%98%E6%9C%89%E6%9B%B4%E5%A4%9A%E5%8A%9F%E8%83%BD%E5%BE%85%E5%BC%80%E5%8F%91"><span class="nav-text">关于 kubernetes 还有好几种集群管理方法，我们这次用的 deployment模板 就是其中之一， 其他的还有pod 模板 和 rc 模板， 这些都是功能很强大的集群调度模板。 还有更多功能待开发</span></a></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="小靖"
-      src="/images/touxiang.jpg">
-  <p class="site-author-name" itemprop="name">小靖</p>
-  <div class="site-description" itemprop="description">直到这一刻微笑着说话为止，我至少留下了一公升眼泪</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">14</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">9</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://blog.csdn.net/JingAAIT?spm=1001.2014.3001.5343" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;JingAAIT?spm&#x3D;1001.2014.3001.5343" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://blog.51cto.com/u_14661501" title="51CTO → https:&#x2F;&#x2F;blog.51cto.com&#x2F;u_14661501" rel="noopener" target="_blank"><i class="github fa-fw"></i>51CTO</a>
-      </span>
-  </div>
-  <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">小靖</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">73k</span>
-</div>
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  
-  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-</body>
-</html>
+<h2 id="测试完成"><a href="#测试完成" class="headerlink" title="测试完成"></a>测试完成</h2><h2 id="关于-kubernetes-还有好几种集群管理方法，我们这次用的-deployment模板-就是其中之一，-其他的还有pod-模板-和-rc-模板，-这些都是功能很强大的集群调度模板。-还有更多功能待开发"><a href="#关于-kubernetes-还有好几种集群管理方法，我们这次用的-deployment模板-就是其中之一，-其他的还有pod-模板-和-rc-模板，-这些都是功能很强大的集群调度模板。-还有更多功能待开发" class="headerlink" title="关于 kubernetes 还有好几种集群管理方法，我们这次用的 deployment模板 就是其中之一， 其他的还有pod 模板 和 rc 模板， 这些都是功能很强大的集群调度模板。 还有更多功能待开发"></a>关于 kubernetes 还有好几种集群管理方法，我们这次用的 deployment模板 就是其中之一， 其他的还有pod 模板 和 rc 模板， 这些都是功能很强大的集群调度模板。 还有更多功能待开发</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">小靖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/10/30/Jenkins+Gitlab+K8s/">http://example.com/2021/10/30/Jenkins+Gitlab+K8s/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">XiaoJing</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/K8s/">K8s</a><a class="post-meta__tags" href="/tags/Jenkins/">Jenkins</a><a class="post-meta__tags" href="/tags/Gitlab/">Gitlab</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/10/30/K8s%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">K8s集群搭建</div></div></a></div><div class="next-post pull-right"><a href="/2021/10/30/ubuntu%2018%20%E7%89%88%E6%9C%AC/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Ubuntu</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/04/06/K8s%E6%9E%B6%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" title="K8s架构基本概念"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-06</div><div class="title">K8s架构基本概念</div></div></a></div><div><a href="/2022/04/15/K8s%E5%91%BD%E4%BB%A4/" title="K8s命令"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-15</div><div class="title">K8s命令</div></div></a></div><div><a href="/2022/04/15/%E5%9F%BA%E4%BA%8Ek8s%E6%90%AD%E5%BB%BAPrometheus/" title="基于K8s搭建Prometheus"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-15</div><div class="title">基于K8s搭建Prometheus</div></div></a></div><div><a href="/2021/10/30/K8s%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/" title="K8s集群搭建"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-30</div><div class="title">K8s集群搭建</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">小靖</div><div class="author-info__description">直到这一刻微笑着说话为止，我至少留下了一公升眼泪</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%AA%8C%E8%AF%81K8s%E9%9B%86%E7%BE%A4%E6%98%AF%E5%90%A6%E6%9C%89%E9%97%AE%E9%A2%98"><span class="toc-number">2.1.</span> <span class="toc-text">开启服务器验证K8s集群是否有问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%B0%E5%9C%A8%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%AAregistry%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BB%BB%E6%84%8F%E9%80%89%E6%8B%A9%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8master%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">2.2.</span> <span class="toc-text">现在我们需要一个registry私有仓库，可以任意选择一台服务器，这个我们使用master服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8Byaml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%A9k8s%E8%87%AA%E5%B7%B1%E6%8E%A7%E5%88%B6%E5%AE%B9%E5%99%A8%E9%9B%86%E7%BE%A4%EF%BC%8C%E7%94%A8%E6%9D%A5%E6%A8%A1%E6%8B%9F%E6%88%91%E4%BB%AC%E9%83%A8%E7%BD%B2%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">2.3.</span> <span class="toc-text">建立yaml配置文件让k8s自己控制容器集群，用来模拟我们部署的服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84ip%E5%8F%AA%E8%83%BD%E5%9C%A8%E5%AE%B9%E5%99%A8%E6%9C%AC%E6%9C%BA%E4%B8%8A%E8%AE%BF%E9%97%AE%EF%BC%8C%E9%9B%86%E7%BE%A4%E5%86%85%E7%9A%84%E5%85%B6%E4%BB%96%E4%B8%BB%E6%9C%BA%E5%92%8C%E9%9B%86%E7%BE%A4%E5%A4%96%E7%9A%84%E4%B8%BB%E6%9C%BA%E9%83%BD%E6%B2%A1%E5%8A%9E%E6%B3%95%E8%AE%BF%E9%97%AE%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%97%B6%E5%80%99%E5%B0%B1%E9%9C%80%E8%A6%81%E5%B0%86%E5%AE%B9%E5%99%A8%E7%9A%84%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84%E7%AB%AF%E5%8F%A3%E4%BA%86%EF%BC%8C%E6%89%80%E4%BB%A5%E9%9C%80%E8%A6%81%E5%81%9A%E4%B8%80%E4%B8%AAservice%E7%9A%84%E6%A8%A1%E6%9D%BF%E3%80%82service-%E6%A8%A1%E6%9D%BF%E5%8F%AF%E4%BB%A5%E5%B0%86%E5%AE%B9%E5%99%A8%E7%9A%84%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%AB%AF%E5%8F%A3%E4%B8%8A%EF%BC%8C%E5%B9%B6%E4%B8%94%E5%8F%AF%E4%BB%A5%E5%9B%BA%E5%AE%9A%E6%98%A0%E5%B0%84%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.4.</span> <span class="toc-text">容器的ip只能在容器本机上访问，集群内的其他主机和集群外的主机都没办法访问，这个时候就需要将容器的端口映射到服务器上的端口了，所以需要做一个service的模板。service 模板可以将容器的端口映射到服务器的端口上，并且可以固定映射在服务器上的端口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BF%E9%97%AE%E6%B5%8B%E8%AF%95%EF%BC%9A192-168-1-10-31234"><span class="toc-number">2.5.</span> <span class="toc-text">浏览器访问测试：192.168.1.10:31234</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kubernetes%E5%AE%8C%E6%AF%95%EF%BC%8C%E5%BC%80%E5%A7%8B%E9%85%8D%E5%90%88jenkins-gitlab%E8%81%94%E5%8A%A8"><span class="toc-number">3.</span> <span class="toc-text">kubernetes完毕，开始配合jenkins+gitlab联动</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%EF%BC%88jenkins%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">基本环境准备（jenkins）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Jenkins"><span class="toc-number">3.2.</span> <span class="toc-text">安装Jenkins</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2tomcat%EF%BC%8C%E5%B0%86jenkins%E7%9A%84%E5%8C%85%E6%94%BE%E8%BF%9Btomcat%E9%87%8C"><span class="toc-number">3.3.</span> <span class="toc-text">部署tomcat，将jenkins的包放进tomcat里</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BF%E9%97%AE"><span class="toc-number">3.4.</span> <span class="toc-text">浏览器访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%A0%E4%B8%BA%E6%B2%A1%E6%9C%89%E5%AE%89%E8%A3%85%EF%BC%8C%E6%89%80%E4%BB%A5%E5%B0%B1%E5%AF%BC%E5%85%A5%E6%8F%92%E4%BB%B6-%E6%8F%92%E4%BB%B6%E5%AD%98%E6%94%BE%E7%9B%AE%E5%BD%95%EF%BC%9A-data-jenkins-plugins"><span class="toc-number">3.5.</span> <span class="toc-text">因为没有安装，所以就导入插件,插件存放目录：&#x2F;data&#x2F;jenkins&#x2F;plugins</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8Jenkins%E6%8F%92%E4%BB%B6%E7%AE%A1%E7%90%86-%E9%AB%98%E7%BA%A7%E8%AE%BE%E7%BD%AE%E7%95%8C%E9%9D%A2%EF%BC%8C%E5%AE%9A%E4%BD%8D%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%9C%80%E5%BA%95%E9%83%A8%E4%B8%AD%E7%9A%84%E3%80%90%E5%8D%87%E7%BA%A7%E7%AB%99%E7%82%B9%E3%80%91%E6%A8%A1%E5%9D%97%EF%BC%8C%E5%B0%86%E5%AF%B9%E5%BA%94URL%E8%BE%93%E5%85%A5%E6%A1%86%E4%B8%AD%E7%9A%84url%E7%9A%84https%E4%BF%AE%E6%94%B9%E4%B8%BAhttp%EF%BC%8C%E5%8D%B3http-updates-jenkins-io-update-center-json%EF%BC%8C%E7%84%B6%E5%90%8E%E7%82%B9%E5%87%BB%E3%80%90%E6%8F%90%E4%BA%A4%E3%80%91%E4%BF%9D%E5%AD%98%E4%BF%AE%E6%94%B9%E9%A1%B9"><span class="toc-number">3.6.</span> <span class="toc-text">在Jenkins插件管理-高级设置界面，定位到页面最底部中的【升级站点】模块，将对应URL输入框中的url的https修改为http，即http:&#x2F;&#x2F;updates.jenkins.io&#x2F;update-center.json，然后点击【提交】保存修改项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E9%9C%80%E8%A6%81%E5%AE%89%E8%A3%85%E4%B8%89%E4%B8%AA%E6%8F%92%E4%BB%B6"><span class="toc-number">3.7.</span> <span class="toc-text">还需要安装三个插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jenkis%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E4%BB%A5%E5%90%8E%EF%BC%8C%E5%86%8D%E5%8E%BB%E5%AE%89%E8%A3%85gitlab"><span class="toc-number">3.8.</span> <span class="toc-text">jenkis安装完成以后，再去安装gitlab</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85gitlab-ce"><span class="toc-number">3.9.</span> <span class="toc-text">安装gitlab-ce</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%A0%E4%B8%BA%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98%EF%BC%8C%E5%B0%B1%E4%B8%8D%E4%BD%BF%E7%94%A8%E8%BF%99%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%8C%E5%9B%BD%E5%86%85%E7%9A%84%E7%94%A8%E6%88%B7%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E7%9A%84%E9%95%9C%E5%83%8F%E8%BF%9B%E8%A1%8C%E5%AE%89%E8%A3%85"><span class="toc-number">3.10.</span> <span class="toc-text">因为网络问题，就不使用这种方式，国内的用户，使用清华大学的镜像进行安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E9%98%B2%E6%AD%A2%E7%AB%AF%E5%8F%A3%E5%86%B2%E7%AA%81%EF%BC%8C%E9%BB%98%E8%AE%A4%E6%98%AF80%E7%AB%AF%E5%8F%A3%EF%BC%8Cunicorn%E9%BB%98%E8%AE%A4%E6%98%AF8080-%E4%B9%9F%E6%98%AFtomcat%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="toc-number">3.11.</span> <span class="toc-text">修改端口防止端口冲突，默认是80端口，unicorn默认是8080 也是tomcat的端口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8gitlab%EF%BC%8C%E8%BF%99%E4%B8%AA%E8%BF%87%E7%A8%8B%E5%8F%AF%E8%83%BD%E4%BC%9A%E6%9C%89%E7%82%B9%E6%85%A2"><span class="toc-number">3.12.</span> <span class="toc-text">启动gitlab，这个过程可能会有点慢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E9%A1%B5%E8%AE%BF%E9%97%AEgitlab%EF%BC%88%E7%94%A8%E6%88%B7%E5%90%8Droot%EF%BC%89"><span class="toc-number">3.13.</span> <span class="toc-text">网页访问gitlab（用户名root）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E8%BF%99%E4%B8%A4%E4%B8%AA%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%81%94%E5%8A%A8%EF%BC%8C%E9%9C%80%E8%A6%81%E7%BB%8F%E8%BF%87ssh%E9%AA%8C%E8%AF%81"><span class="toc-number">3.14.</span> <span class="toc-text">部署这两个服务的联动，需要经过ssh验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93"><span class="toc-number">3.15.</span> <span class="toc-text">新建一个代码仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%B9%E5%87%BB%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AAnew-file"><span class="toc-number">3.16.</span> <span class="toc-text">点击新建一个new.file</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%85%A5%E4%BB%A3%E7%A0%81%EF%BC%8C%E8%B5%B7%E4%B8%80%E4%B8%AA%E5%90%8D%E5%AD%97%E7%84%B6%E5%90%8E%E4%BF%9D%E5%AD%98"><span class="toc-number">3.17.</span> <span class="toc-text">写入代码，起一个名字然后保存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86%E9%A1%B9%E7%9B%AE%E5%85%8B%E9%9A%86%E5%88%B0%E6%9C%AC%E5%9C%B0%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E5%8F%AF%E7%94%A8"><span class="toc-number">3.18.</span> <span class="toc-text">将项目克隆到本地测试是否可用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%BC%80jenkins%EF%BC%8C%E6%96%B0%E5%BB%BA%E4%BB%BB%E5%8A%A1"><span class="toc-number">3.19.</span> <span class="toc-text">打开jenkins，新建任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E7%9A%84%E8%BF%99%E4%B8%AA%E6%8F%92%E4%BB%B6%E5%BE%88%E9%87%8D%E8%A6%81%EF%BC%8C%E5%B0%B1%E6%98%AF%E4%BB%96%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9B%B4%E6%96%B0%E7%9A%84webhook%E6%8F%92%E4%BB%B6%EF%BC%8C%E5%AE%89%E8%A3%85%E8%BF%87%E4%BA%86%E5%B0%B1%E4%BC%9A%E6%9C%89%E8%BF%99%E6%9D%A1%EF%BC%8C%E7%84%B6%E5%90%8E%E7%82%B9%E5%87%BB%E8%BF%99%E6%9D%A1%E4%B8%8B%E9%9D%A2%E5%87%BA%E6%9D%A5%E7%9A%84%E8%BF%99%E4%BA%9B%E4%B8%9C%E8%A5%BF%E4%BF%9D%E6%8C%81%E9%BB%98%E8%AE%A4%E5%B0%B1%E8%A1%8C%E3%80%82%E5%90%8C%E6%97%B6%E6%B3%A8%E6%84%8F%E5%A4%8D%E5%88%B6"><span class="toc-number">3.20.</span> <span class="toc-text">下面的这个插件很重要，就是他实现自动化更新的webhook插件，安装过了就会有这条，然后点击这条下面出来的这些东西保持默认就行。同时注意复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E9%87%8C%E9%9D%A2%E5%86%99%E7%9A%84%E6%98%AFjenkins%E6%9E%84%E5%BB%BA%E6%97%B6%E5%80%99%E4%BC%9A%E6%89%A7%E8%A1%8C%E7%9A%84shell%E8%84%9A%E6%9C%AC%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%98%AF%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%EF%BC%8C%E5%B0%B1%E6%98%AF%E4%BB%96%E5%AE%9E%E7%8E%B0%E4%BA%86%E4%B8%8B%E7%AB%AFkubernetes%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0%E5%AE%B9%E5%99%A8%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">3.21.</span> <span class="toc-text">这个里面写的是jenkins构建时候会执行的shell脚本，这个是最重要的，就是他实现了下端kubernetes自动更新容器的操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6"><span class="toc-number">3.22.</span> <span class="toc-text">脚本文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E5%9C%B0%E5%9D%80%E5%8E%BBgitlab%E4%B8%8A%E7%BB%91%E5%AE%9Awebhook"><span class="toc-number">3.23.</span> <span class="toc-text">复制地址去gitlab上绑定webhook</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%EF%BC%8C%E7%99%BB%E5%BD%95gitlab%EF%BC%8C%E7%82%B9%E5%87%BB%E4%B8%8B%E5%9B%BE%E8%BF%99%E4%B8%AA%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.24.</span> <span class="toc-text">保存，登录gitlab，点击下图这个设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%80%E4%B8%8B%E6%8B%89%EF%BC%8C%E5%8E%BB%E6%8E%89ssh%E9%AA%8C%E8%AF%81%EF%BC%8C%E6%B7%BB%E5%8A%A0webhook"><span class="toc-number">3.25.</span> <span class="toc-text">往下拉，去掉ssh验证，添加webhook</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E7%8E%B0%E6%8A%A5%E9%94%99%EF%BC%8C%E6%8F%90%E7%A4%BA%E6%9C%AC%E5%9C%B0%E8%BF%9E%E6%8E%A5%E4%B8%8D%E4%BA%86%EF%BC%8C%E5%9B%A0%E4%B8%BAgitlab%E9%BB%98%E8%AE%A4%E8%AE%BE%E7%BD%AE%E4%B8%8D%E5%85%81%E8%AE%B8%E6%83%B3%E8%87%AA%E5%B7%B1%E5%8F%91%E9%80%81web-hook"><span class="toc-number">3.26.</span> <span class="toc-text">出现报错，提示本地连接不了，因为gitlab默认设置不允许想自己发送web hook</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="toc-number">3.27.</span> <span class="toc-text">解决办法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E4%B9%8B%E5%90%8E%E9%87%8D%E8%AF%95%EF%BC%8C%E6%88%90%E5%8A%9F%E7%9A%84%E5%A6%82%E4%B8%8B%E5%9B%BE%E6%89%80%E7%A4%BA"><span class="toc-number">3.28.</span> <span class="toc-text">保存之后重试，成功的如下图所示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95jenkins%E4%B8%8Egitlab%E8%BF%9E%E9%80%9A"><span class="toc-number">3.29.</span> <span class="toc-text">测试jenkins与gitlab连通</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#403%E6%8A%A5%E9%94%99%E7%9A%84%EF%BC%8C%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="toc-number">3.30.</span> <span class="toc-text">403报错的，解决办法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E5%88%B0Jenkins%E5%BC%80%E5%90%AF%E5%8C%BF%E5%90%8D%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90"><span class="toc-number">3.31.</span> <span class="toc-text">回到Jenkins开启匿名访问权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E4%B9%8B%E5%90%8E%E5%86%8D%E7%82%B9%E5%87%BB%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.32.</span> <span class="toc-text">保存之后再点击系统设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E7%8E%B0%E8%93%9D%E6%9D%A1%E8%AF%B4%E6%98%8Ejenkins%E5%B7%B2%E7%BB%8F%E8%BF%9E%E9%80%9Agitlab"><span class="toc-number">3.33.</span> <span class="toc-text">出现蓝条说明jenkins已经连通gitlab</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jenkins%E5%92%8Cgitlab-%E9%83%BD%E5%B7%B2%E7%BB%8F%E4%BA%92%E7%9B%B8%E7%9A%84ssh%E9%80%9A%E8%BF%87%E4%BA%86%EF%BC%8C%E7%84%B6%E5%90%8E%E6%88%91%E4%BB%AC%E6%9C%80%E5%90%8E%E9%9C%80%E8%A6%81%E5%81%9A%E7%9A%84%E4%B8%80%E4%B8%AAssh%E6%98%AF%E5%85%B3%E4%BA%8Ejenkins"><span class="toc-number">3.34.</span> <span class="toc-text">jenkins和gitlab 都已经互相的ssh通过了，然后我们最后需要做的一个ssh是关于jenkins</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E6%98%AF%E4%BB%8Eautoweb%E5%90%91master%E8%8A%82%E7%82%B9%E5%81%9A%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95"><span class="toc-number">3.35.</span> <span class="toc-text">这里是从autoweb向master节点做免密登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%85%A8%E9%83%A8%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%AF%95%EF%BC%81%EF%BC%81%EF%BC%81%E5%BC%80%E5%A7%8B%E6%B5%8B%E8%AF%95"><span class="toc-number">3.36.</span> <span class="toc-text">环境全部部署完毕！！！开始测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AB%8B%E5%8D%B3%E6%9E%84%E5%BB%BA"><span class="toc-number">3.37.</span> <span class="toc-text">立即构建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%E6%9F%A5%E7%9C%8B%E7%BD%91%E9%A1%B5%E7%9A%84%E5%8F%98%E5%8C%96"><span class="toc-number">3.38.</span> <span class="toc-text">构建完成之后查看网页的变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E5%88%B0Gitlab%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81%E6%B5%8B%E8%AF%95"><span class="toc-number">3.39.</span> <span class="toc-text">回到Gitlab更新代码测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87web-hook%E8%BF%99%E4%B8%AA%E6%8F%92%E4%BB%B6%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E4%BB%A3%E7%A0%81%E7%9A%84%E6%9B%B4%E6%96%B0%EF%BC%8C%E7%84%B6%E5%90%8E%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E4%BF%9D%E8%AF%81%E5%AE%9E%E6%97%B6%E5%90%8C%E6%AD%A5%EF%BC%8C%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90"><span class="toc-number">3.40.</span> <span class="toc-text">通过web hook这个插件会自动识别代码的更新，然后自动构建保证实时同步，持续集成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%8D%E6%AC%A1%E6%9F%A5%E7%9C%8B%E7%BD%91%E9%A1%B5%E7%9A%84%E5%8F%98%E5%8C%96"><span class="toc-number">3.41.</span> <span class="toc-text">再次查看网页的变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E7%9A%84%E5%8E%86%E5%8F%B2%E7%89%88%E6%9C%AC%E7%9A%84%E5%AD%98%E6%94%BE%E7%9B%AE%E5%BD%95%EF%BC%9A-data-backcode-test"><span class="toc-number">3.42.</span> <span class="toc-text">构建的历史版本的存放目录：&#x2F;data&#x2F;backcode&#x2F;test</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%AE%8C%E6%88%90"><span class="toc-number">3.43.</span> <span class="toc-text">测试完成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-kubernetes-%E8%BF%98%E6%9C%89%E5%A5%BD%E5%87%A0%E7%A7%8D%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E6%96%B9%E6%B3%95%EF%BC%8C%E6%88%91%E4%BB%AC%E8%BF%99%E6%AC%A1%E7%94%A8%E7%9A%84-deployment%E6%A8%A1%E6%9D%BF-%E5%B0%B1%E6%98%AF%E5%85%B6%E4%B8%AD%E4%B9%8B%E4%B8%80%EF%BC%8C-%E5%85%B6%E4%BB%96%E7%9A%84%E8%BF%98%E6%9C%89pod-%E6%A8%A1%E6%9D%BF-%E5%92%8C-rc-%E6%A8%A1%E6%9D%BF%EF%BC%8C-%E8%BF%99%E4%BA%9B%E9%83%BD%E6%98%AF%E5%8A%9F%E8%83%BD%E5%BE%88%E5%BC%BA%E5%A4%A7%E7%9A%84%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E6%A8%A1%E6%9D%BF%E3%80%82-%E8%BF%98%E6%9C%89%E6%9B%B4%E5%A4%9A%E5%8A%9F%E8%83%BD%E5%BE%85%E5%BC%80%E5%8F%91"><span class="toc-number">3.44.</span> <span class="toc-text">关于 kubernetes 还有好几种集群管理方法，我们这次用的 deployment模板 就是其中之一， 其他的还有pod 模板 和 rc 模板， 这些都是功能很强大的集群调度模板。 还有更多功能待开发</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/04/19/%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F%E9%AB%98%E5%8D%A0%E7%94%A8%E5%86%85%E5%AD%98CPU%E8%BF%9B%E7%A8%8B%E8%84%9A%E6%9C%AC/" title="采集系统高占用内存CPU进程脚本"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="采集系统高占用内存CPU进程脚本"/></a><div class="content"><a class="title" href="/2022/04/19/%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F%E9%AB%98%E5%8D%A0%E7%94%A8%E5%86%85%E5%AD%98CPU%E8%BF%9B%E7%A8%8B%E8%84%9A%E6%9C%AC/" title="采集系统高占用内存CPU进程脚本">采集系统高占用内存CPU进程脚本</a><time datetime="2022-04-19T06:56:09.609Z" title="发表于 2022-04-19 14:56:09">2022-04-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/15/K8s%E5%91%BD%E4%BB%A4/" title="K8s命令"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="K8s命令"/></a><div class="content"><a class="title" href="/2022/04/15/K8s%E5%91%BD%E4%BB%A4/" title="K8s命令">K8s命令</a><time datetime="2022-04-15T12:15:24.984Z" title="发表于 2022-04-15 20:15:24">2022-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/15/%E5%9F%BA%E4%BA%8Ek8s%E6%90%AD%E5%BB%BAPrometheus/" title="基于K8s搭建Prometheus"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于K8s搭建Prometheus"/></a><div class="content"><a class="title" href="/2022/04/15/%E5%9F%BA%E4%BA%8Ek8s%E6%90%AD%E5%BB%BAPrometheus/" title="基于K8s搭建Prometheus">基于K8s搭建Prometheus</a><time datetime="2022-04-15T11:46:37.647Z" title="发表于 2022-04-15 19:46:37">2022-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/15/Prometheus/" title="Prometheus"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Prometheus"/></a><div class="content"><a class="title" href="/2022/04/15/Prometheus/" title="Prometheus">Prometheus</a><time datetime="2022-04-15T10:59:48.432Z" title="发表于 2022-04-15 18:59:48">2022-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/12/Docker%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/" title="K8s私有仓库搭建"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="K8s私有仓库搭建"/></a><div class="content"><a class="title" href="/2022/04/12/Docker%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/" title="K8s私有仓库搭建">K8s私有仓库搭建</a><time datetime="2022-04-12T05:01:52.986Z" title="发表于 2022-04-12 13:01:52">2022-04-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 小靖</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
