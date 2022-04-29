@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="直到这一刻微笑着说话为止，我至少留下了一公升眼泪">
+  <meta name="description" content="K8s命令K8s基础的命令">
 <meta property="og:type" content="article">
 <meta property="og:title" content="K8s命令">
 <meta property="og:url" content="http://example.com/2022/04/15/K8s%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="XiaoJing">
-<meta property="og:description" content="直到这一刻微笑着说话为止，我至少留下了一公升眼泪">
+<meta property="og:description" content="K8s命令K8s基础的命令">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-04-15T12:15:24.984Z">
-<meta property="article:modified_time" content="2022-04-16T06:30:18.633Z">
+<meta property="article:modified_time" content="2022-04-24T02:17:53.671Z">
 <meta property="article:author" content="小靖">
 <meta property="article:tag" content="K8s">
 <meta name="twitter:card" content="summary">
@@ -197,7 +197,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-16 14:30:18" itemprop="dateModified" datetime="2022-04-16T14:30:18+08:00">2022-04-16</time>
+                <time title="修改时间：2022-04-24 10:17:53" itemprop="dateModified" datetime="2022-04-24T10:17:53+08:00">2022-04-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,7 +222,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>2.6k</span>
             </span>
 
         </div>
@@ -235,7 +235,30 @@
 
 
       
-        
+        <h2 id="K8s命令"><a href="#K8s命令" class="headerlink" title="K8s命令"></a>K8s命令</h2><p>K8s基础的命令</p>
+<span id="more"></span>
+
+<h2 id="Back-off-restarting-failed-container（容器无限重启）"><a href="#Back-off-restarting-failed-container（容器无限重启）" class="headerlink" title="Back-off restarting failed container（容器无限重启）"></a>Back-off restarting failed container（容器无限重启）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#排错手法</span></span><br><span class="line"></span><br><span class="line">kubectl get deploy  <span class="comment">#查看deploy信息</span></span><br><span class="line"></span><br><span class="line">kubectl get deploy my-centos -o=yaml &gt; my-centos.yaml  <span class="comment">#将容器的deployment文件导出</span></span><br><span class="line"></span><br><span class="line">kubectl get deploy  <span class="comment">#查看deploy信息</span></span><br><span class="line"></span><br><span class="line">kubectl  delete  deploy  my-centos  -n monitoring  <span class="comment">#删除容器</span></span><br><span class="line"></span><br><span class="line">kubectl delete deploy my-centos  <span class="comment">#删除svc</span></span><br><span class="line"></span><br><span class="line">vim my-centos.yaml  <span class="comment">#修改yaml文件，添加command</span></span><br><span class="line">    <span class="built_in">command</span>: [<span class="string">&quot;/bin/sh&quot;</span>,<span class="string">&quot;-ce&quot;</span>,<span class="string">&quot;tail -f /dev/null&quot;</span>]</span><br><span class="line">kubectl apply -f my-centos.yaml  <span class="comment">#重新运行容器</span></span><br><span class="line"></span><br><span class="line">kubectl get pod</span><br><span class="line"></span><br><span class="line">kubectl get deploy   <span class="comment">#查看是否还无限重启</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="查看容器在那些节点上运行"><a href="#查看容器在那些节点上运行" class="headerlink" title="查看容器在那些节点上运行"></a>查看容器在那些节点上运行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl  get pods -n monitoring  -owide -w  <span class="comment">#实时查看</span></span><br><span class="line">kubectl  get pods -n monitoring  -owide  </span><br></pre></td></tr></table></figure>
+
+<h2 id="查看容器日志"><a href="#查看容器日志" class="headerlink" title="查看容器日志"></a>查看容器日志</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl logs kube-state-metrics-6dd4f97c46-6kq4s -c kube-state-metrics -n monitoring</span><br></pre></td></tr></table></figure>
+
+<h2 id="卸载网络插件"><a href="#卸载网络插件" class="headerlink" title="卸载网络插件"></a>卸载网络插件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl  delete  -f  calico.yaml </span><br></pre></td></tr></table></figure>
+
+<h2 id="容器内存超出"><a href="#容器内存超出" class="headerlink" title="容器内存超出"></a>容器内存超出</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oom</span><br></pre></td></tr></table></figure>
+
+<h2 id="把node上已有Pod驱逐"><a href="#把node上已有Pod驱逐" class="headerlink" title="把node上已有Pod驱逐"></a>把node上已有Pod驱逐</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># drain 移除同时驱逐 cordon 不可调度  uncordon 可调度</span></span><br><span class="line">kubectl cordon nodename</span><br><span class="line">kubectl drain nodename</span><br><span class="line">kubectl uncordon nodename</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加污点"><a href="#添加污点" class="headerlink" title="添加污点"></a>添加污点</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes node2 check=yuanzhang:NoExecute</span><br><span class="line"></span><br><span class="line">NoSchedule : 一定不被调度 但是不会驱逐已有的  这个部署 ingress-controller 的时候 有用</span><br><span class="line">PreferNoSchedule ： 尽量不被调度</span><br><span class="line">NoExecute : 不会调度，并且还会驱逐Node已有Pod 这个很坏</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看节点的污点"><a href="#查看节点的污点" class="headerlink" title="查看节点的污点"></a>查看节点的污点</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe node  节点名称  </span><br></pre></td></tr></table></figure>
+
+<h2 id="去除污点"><a href="#去除污点" class="headerlink" title="去除污点"></a>去除污点</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes k8s-node2 check:NoExecute</span><br></pre></td></tr></table></figure>
+
+<h2 id="容器报错OOM内存超出的解决办法"><a href="#容器报错OOM内存超出的解决办法" class="headerlink" title="容器报错OOM内存超出的解决办法"></a>容器报错OOM内存超出的解决办法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#####OOM Kill</span></span><br><span class="line">OOM是Out of Memory的缩写，OOM Killer会在Linux系统中内存不足时，会杀死一个正在运行的进程来释放内存。</span><br><span class="line"></span><br><span class="line">为什么内存不足的时候，不是malloc()函数返回失败，而是杀死正在运行的进程呢？这和Linux进程的内存申请策略有关。Linux进程申请内存时，允许申请超过实际物理内存上限的大小(称为overcommit)，也就是说如果实际空闲物理内存只有512M了，但一个进程仍然可以申请600M的内存大小，因为malloc()申请的是内存的虚拟地址，系统只会给一个地址范围，由于没有写入数据，所以程序并没有得到真正的物理内存。只有在真正往申请的内存地址写入数据的时候，才会分配物理内存。这种策略可以有效提高系统的内存利用率，但一旦物理内存真的不够了，Linux采取的措施就是杀死某个正在运行的进程。</span><br><span class="line"></span><br><span class="line">那么，在发生OOM时，Linux是根据什么标准来选择要杀死的进程呢？这就涉及到Linux内核中的oom_badness()函数，它定义了选择进程的标准。它的计算方式是这样的：用系统总的可用页面数，去乘以OOM校准值oom_score_adj，再加上进程已经使用的物理页面数，计算出来的值越大，这个进程被OOM Kill的几率也就越大。其中，oom_score_adj是进程的OOM校准值，每个进程都有一个/proc/&lt;pid&gt;/oom_score_adj的接口文件，我们可以在这个文件中输入-1000~1000之间的任一数值(默认值是0)，来调整被OOM <span class="built_in">kill</span>的几率。</span><br><span class="line"></span><br><span class="line"><span class="comment">#####Memory Cgroup</span></span><br><span class="line">容器发生OOM Kill大多是因为Memory Cgroup的限制所导致。Momory Cgrou是Linux Cgroup的子系统之一，它的作用是对一组进程的Memory使用做限制。</span><br><span class="line"></span><br><span class="line">Memory Cgroup的虚拟文件系统挂载点一般在/sys/fs/cgroup/memory目录下。和CPU Cgroup一样，Memory Cgroup也是树状结构，每一个分支都是一个控制组，每个控制组下有很多参数，其中跟OOM相关的3个重要参数为：memory.limit_in_bytes，memory.oom_control，memory.usage_in_bytes</span><br><span class="line"></span><br><span class="line">memory.limit_in_bytes：这是每个Memory Cgroup控制组里最重要的一个参数了，控制组里所有进程可使用的内存最大值，就是由这个值决定的。由于是树状结构，父节点的memory.limit_in_bytes值会限制它的子节点中所有进程的内存使用，即使子节点的memory.limit_in_bytes值比父节点的大。</span><br><span class="line"></span><br><span class="line">在我的系统里，这个值很大，远远超过了物理内存的大小(我的物理内存是32G)：</span><br><span class="line">cat memory.limit_in_bytes </span><br><span class="line">9223372036854771712</span><br><span class="line"></span><br><span class="line">memory.oom_control：这个参数决定了当控制组中的内存使用量达到了最大值，会不会触发OOM Killer。缺省值会触发OOM Killer，试了修改我的系统中该文件中的值，发现是Permission denied的。</span><br><span class="line"></span><br><span class="line">memory.usage_in_bytes：该值表示了当前控制组里所有进程实际使用的内存总和。该数值和memory.limit_in_bytes中的值约接近，OOM的风险越高</span><br><span class="line"></span><br><span class="line">可以针对进程被OOM <span class="built_in">kill</span>掉做一些处理，一种情况是进程本身的确需要很大的内存，但memory.limit_in_bytes的值设小了，那么就需要增大这个上限值；另一种情况就是代码bug，导致内存泄露，这就需要去解决代码中的问题</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
@@ -283,7 +306,10 @@
     <a href="/2022/04/15/%E5%9F%BA%E4%BA%8Ek8s%E6%90%AD%E5%BB%BAPrometheus/" rel="prev" title="基于K8s搭建Prometheus">
       <i class="fa fa-chevron-left"></i> 基于K8s搭建Prometheus
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/19/%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F%E9%AB%98%E5%8D%A0%E7%94%A8%E5%86%85%E5%AD%98CPU%E8%BF%9B%E7%A8%8B%E8%84%9A%E6%9C%AC/" rel="next" title="采集系统高占用内存CPU进程脚本">
+      采集系统高占用内存CPU进程脚本 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -343,6 +369,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#K8s%E5%91%BD%E4%BB%A4"><span class="nav-text">K8s命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Back-off-restarting-failed-container%EF%BC%88%E5%AE%B9%E5%99%A8%E6%97%A0%E9%99%90%E9%87%8D%E5%90%AF%EF%BC%89"><span class="nav-text">Back-off restarting failed container（容器无限重启）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E5%9C%A8%E9%82%A3%E4%BA%9B%E8%8A%82%E7%82%B9%E4%B8%8A%E8%BF%90%E8%A1%8C"><span class="nav-text">查看容器在那些节点上运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97"><span class="nav-text">查看容器日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6"><span class="nav-text">卸载网络插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%86%85%E5%AD%98%E8%B6%85%E5%87%BA"><span class="nav-text">容器内存超出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%8Anode%E4%B8%8A%E5%B7%B2%E6%9C%89Pod%E9%A9%B1%E9%80%90"><span class="nav-text">把node上已有Pod驱逐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%B1%A1%E7%82%B9"><span class="nav-text">添加污点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%8A%82%E7%82%B9%E7%9A%84%E6%B1%A1%E7%82%B9"><span class="nav-text">查看节点的污点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E6%B1%A1%E7%82%B9"><span class="nav-text">去除污点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E6%8A%A5%E9%94%99OOM%E5%86%85%E5%AD%98%E8%B6%85%E5%87%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-text">容器报错OOM内存超出的解决办法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -358,7 +385,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -420,7 +447,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">69k</span>
+    <span title="站点总字数">73k</span>
 </div>
 
         
