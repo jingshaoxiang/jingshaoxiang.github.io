@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>keepalived高可用VIP地址漂移 | (&gt;Romantic_love&lt;)</title><meta name="keywords" content="高可用"><meta name="author" content="小靖"><meta name="copyright" content="小靖"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Keepalived的VIP高可用部署步骤配合mysql主从和mongodb集群使用最佳12345678910111213##环境准备VIP： 192.168.116.10mongodb1 ：192.168.116.1mongodb2： 192.168.116.2mongodb3： 192.168.116.3##安装keepalivedyum -y  install keepalived###修改">
+<meta property="og:type" content="article">
+<meta property="og:title" content="keepalived高可用VIP地址漂移">
+<meta property="og:url" content="http://example.com/2022/12/02/keepalived/index.html">
+<meta property="og:site_name" content="(&gt;Romantic_love&lt;)">
+<meta property="og:description" content="Keepalived的VIP高可用部署步骤配合mysql主从和mongodb集群使用最佳12345678910111213##环境准备VIP： 192.168.116.10mongodb1 ：192.168.116.1mongodb2： 192.168.116.2mongodb3： 192.168.116.3##安装keepalivedyum -y  install keepalived###修改">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/bf53edc6a13e4029a7120cdd4ccf0501.png">
+<meta property="article:published_time" content="2022-12-01T16:57:55.455Z">
+<meta property="article:modified_time" content="2022-12-01T17:13:24.575Z">
+<meta property="article:author" content="小靖">
+<meta property="article:tag" content="高可用">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/bf53edc6a13e4029a7120cdd4ccf0501.png"><link rel="shortcut icon" href="/img/12.png"><link rel="canonical" href="http://example.com/2022/12/02/keepalived/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'keepalived高可用VIP地址漂移',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-12-02 01:13:24'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/12.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img-blog.csdnimg.cn/bf53edc6a13e4029a7120cdd4ccf0501.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">(&gt;Romantic_love&lt;)</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">keepalived高可用VIP地址漂移</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-01T16:57:55.455Z" title="发表于 2022-12-02 00:57:55">2022-12-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-12-01T17:13:24.575Z" title="更新于 2022-12-02 01:13:24">2022-12-02</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="keepalived高可用VIP地址漂移"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="Keepalived的VIP高可用部署步骤"><a href="#Keepalived的VIP高可用部署步骤" class="headerlink" title="Keepalived的VIP高可用部署步骤"></a>Keepalived的VIP高可用部署步骤</h2><h4 id="配合mysql主从和mongodb集群使用最佳"><a href="#配合mysql主从和mongodb集群使用最佳" class="headerlink" title="配合mysql主从和mongodb集群使用最佳"></a>配合mysql主从和mongodb集群使用最佳</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##环境准备</span></span><br><span class="line"></span><br><span class="line">VIP： 192.168.116.10</span><br><span class="line">mongodb1 ：192.168.116.1</span><br><span class="line">mongodb2： 192.168.116.2</span><br><span class="line">mongodb3： 192.168.116.3</span><br><span class="line"></span><br><span class="line"><span class="comment">##安装keepalived</span></span><br><span class="line">yum -y  install keepalived</span><br><span class="line"></span><br><span class="line"><span class="comment">###修改配置文件（3台）</span></span><br><span class="line"><span class="built_in">cd</span> /etc/keepalived</span><br><span class="line">mv keepalived.conf keepalived.conf.bak   <span class="comment">#备份文件</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###设置配置文件</span></span><br><span class="line"></span><br><span class="line">vim keepalived.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置类似如下</span></span><br><span class="line">global_defs &#123;</span><br><span class="line">   notification_email &#123;</span><br><span class="line">     me@example.com</span><br><span class="line">   &#125;</span><br><span class="line">   notification_email_from system@example.com   <span class="comment">#邮件服务器可以不写</span></span><br><span class="line">   smtp_server 192.168.1.1</span><br><span class="line">   smtp_connect_timeout 30</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Define the script to see if the local node is the primary</span></span><br><span class="line">vrrp_script chk_mongo_primary &#123;</span><br><span class="line">    script <span class="string">&quot;/etc/keepalived/scripts/mongo.sh&quot;</span>   <span class="comment">#需要执行的脚本</span></span><br><span class="line">    <span class="comment"># 检查频率，以下配置每5秒检查1次</span></span><br><span class="line">    interval 5</span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    weight 3</span><br><span class="line">    <span class="comment"># 连续监测失败3次，才认为真的健康检查失败。并调整优先级  </span></span><br><span class="line">    fall 3</span><br><span class="line">    <span class="comment"># 连续监测2次成功，就认为成功。但不调整优先级  </span></span><br><span class="line">    rise 2</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Configuation for the virtual interface</span></span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    <span class="comment"># 发送心跳包的源IP，可使用绑定的网卡IP，也可以使用本服务器上的其他IP</span></span><br><span class="line">    interface ens33</span><br><span class="line">    <span class="comment"># 指定vrrp_instance的初始状态，master还是backup</span></span><br><span class="line">    state node MASTER</span><br><span class="line">    <span class="comment"># 本机的优先级，VRID相同的机器中，优先级最高的会被选举为MASTER</span></span><br><span class="line">    priority 150</span><br><span class="line">    <span class="comment"># 相当于VRID，用于在一个网内区分组播，需要组播域内内唯一</span></span><br><span class="line">    virtual_router_id 55</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 定义主从的验证方式以及密码，一般使用PASS</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass secret     <span class="comment"># Set this to some secret phrase</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 虚拟IP</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.116.10</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 设置检查脚本，关联上方的vrrp_script</span></span><br><span class="line">    track_script &#123;</span><br><span class="line">        chk_mongo_primary</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="三个keepalived节点这边设定192-168-116-1的初始状态是master，其他两台是slave"><a href="#三个keepalived节点这边设定192-168-116-1的初始状态是master，其他两台是slave" class="headerlink" title="三个keepalived节点这边设定192.168.116.1的初始状态是master，其他两台是slave"></a>三个keepalived节点这边设定192.168.116.1的初始状态是master，其他两台是slave</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###配置文件按需修改，主要修改以下几个配置：</span></span><br><span class="line"></span><br><span class="line">vrrp_instance：</span><br><span class="line">    interface ens33</span><br><span class="line">    state node SLAVE    <span class="comment"># 初始一台master，其他slave</span></span><br><span class="line">    priority 100  <span class="comment"># 权重，初始master最大，其他slave可以设定为100</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="添加监控脚本"><a href="#添加监控脚本" class="headerlink" title="添加监控脚本"></a>添加监控脚本</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mkdir -pv /etc/keepalived/scripts</span><br><span class="line"></span><br><span class="line">cat /etc/keepalived/scripts/mongo.sh</span><br><span class="line"></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"> </span><br><span class="line">jiance=$(docker ps | grep mongo)   <span class="comment">#检测mongo服务是否存在</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ $? == 0 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">exit</span> 0  <span class="comment">#返回值为0 代表存在,退出脚本,不调整优先级</span></span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">  systemctl stop keepalived.service   <span class="comment">#返回值为1,代表不存在,停止keepalived,将vip释放</span></span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">###注意奥,这个脚本是没有执行权限的,需要chmod +x ,不然keepalived没办法执行这个脚本,服务挂了他也不会执行!</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="恢复环境"><a href="#恢复环境" class="headerlink" title="恢复环境"></a>恢复环境</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.先将被脚本检测的服务启动；</span><br><span class="line">2.再将keepalived启动；</span><br><span class="line">3.检查VIP地址是否归还；</span><br><span class="line">4.完事</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">小靖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/12/02/keepalived/">http://example.com/2022/12/02/keepalived/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">(>Romantic_love<)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/">高可用</a></div><div class="post_share"><div class="social-share" data-image="https://img-blog.csdnimg.cn/bf53edc6a13e4029a7120cdd4ccf0501.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/11/16/docker%E9%83%A8%E7%BD%B2mongo%E9%9B%86%E7%BE%A4(%E5%A4%9A%E6%9C%BA)/"><img class="next-cover" src="https://img-blog.csdnimg.cn/55c99aed278a4a6f81a54c47b19c8690.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">docker部署mongo集群(多机环境)</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/12.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">小靖</div><div class="author-info__description">为什么要只吸收负面，负面话语是用来激励自己成为更优秀的人，不是成为你不自信的累赘，坏的学会改，好的学会加强！</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Keepalived%E7%9A%84VIP%E9%AB%98%E5%8F%AF%E7%94%A8%E9%83%A8%E7%BD%B2%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.</span> <span class="toc-text">Keepalived的VIP高可用部署步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E5%90%88mysql%E4%B8%BB%E4%BB%8E%E5%92%8Cmongodb%E9%9B%86%E7%BE%A4%E4%BD%BF%E7%94%A8%E6%9C%80%E4%BD%B3"><span class="toc-number">1.0.1.</span> <span class="toc-text">配合mysql主从和mongodb集群使用最佳</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E4%B8%AAkeepalived%E8%8A%82%E7%82%B9%E8%BF%99%E8%BE%B9%E8%AE%BE%E5%AE%9A192-168-116-1%E7%9A%84%E5%88%9D%E5%A7%8B%E7%8A%B6%E6%80%81%E6%98%AFmaster%EF%BC%8C%E5%85%B6%E4%BB%96%E4%B8%A4%E5%8F%B0%E6%98%AFslave"><span class="toc-number">1.0.2.</span> <span class="toc-text">三个keepalived节点这边设定192.168.116.1的初始状态是master，其他两台是slave</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%9B%91%E6%8E%A7%E8%84%9A%E6%9C%AC"><span class="toc-number">1.0.3.</span> <span class="toc-text">添加监控脚本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D%E7%8E%AF%E5%A2%83"><span class="toc-number">1.0.4.</span> <span class="toc-text">恢复环境</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/02/keepalived/" title="keepalived高可用VIP地址漂移"><img src="https://img-blog.csdnimg.cn/bf53edc6a13e4029a7120cdd4ccf0501.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="keepalived高可用VIP地址漂移"/></a><div class="content"><a class="title" href="/2022/12/02/keepalived/" title="keepalived高可用VIP地址漂移">keepalived高可用VIP地址漂移</a><time datetime="2022-12-01T16:57:55.455Z" title="发表于 2022-12-02 00:57:55">2022-12-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/16/docker%E9%83%A8%E7%BD%B2mongo%E9%9B%86%E7%BE%A4(%E5%A4%9A%E6%9C%BA)/" title="docker部署mongo集群(多机环境)"><img src="https://img-blog.csdnimg.cn/55c99aed278a4a6f81a54c47b19c8690.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker部署mongo集群(多机环境)"/></a><div class="content"><a class="title" href="/2022/11/16/docker%E9%83%A8%E7%BD%B2mongo%E9%9B%86%E7%BE%A4(%E5%A4%9A%E6%9C%BA)/" title="docker部署mongo集群(多机环境)">docker部署mongo集群(多机环境)</a><time datetime="2022-11-16T10:26:12.990Z" title="发表于 2022-11-16 18:26:12">2022-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/04/%E5%88%9D%E5%A7%8B%E5%8C%96centos7%E7%B3%BB%E7%BB%9F/" title="一键初始化linux系统"><img src="https://img-blog.csdnimg.cn/23a40155a9a842669704927e6eb886e9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一键初始化linux系统"/></a><div class="content"><a class="title" href="/2022/10/04/%E5%88%9D%E5%A7%8B%E5%8C%96centos7%E7%B3%BB%E7%BB%9F/" title="一键初始化linux系统">一键初始化linux系统</a><time datetime="2022-10-04T08:25:12.650Z" title="发表于 2022-10-04 16:25:12">2022-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/10/%E5%8D%8A%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85k8s%E9%9B%86%E7%BE%A4/" title="半自动化部署k8s集群"><img src="https://img-blog.csdnimg.cn/cdc934c431824a0685a17a41d9b1c00d.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="半自动化部署k8s集群"/></a><div class="content"><a class="title" href="/2022/09/10/%E5%8D%8A%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85k8s%E9%9B%86%E7%BE%A4/" title="半自动化部署k8s集群">半自动化部署k8s集群</a><time datetime="2022-09-10T14:32:08.676Z" title="发表于 2022-09-10 22:32:08">2022-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/03/%E5%8D%8A%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2docker_swarm%E7%8E%AF%E5%A2%83/" title="半自动化部署Docker_swarm环境"><img src="https://img-blog.csdnimg.cn/ed22d06df7054951a449470084c0c763.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="半自动化部署Docker_swarm环境"/></a><div class="content"><a class="title" href="/2022/09/03/%E5%8D%8A%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2docker_swarm%E7%8E%AF%E5%A2%83/" title="半自动化部署Docker_swarm环境">半自动化部署Docker_swarm环境</a><time datetime="2022-09-03T14:55:08.797Z" title="发表于 2022-09-03 22:55:08">2022-09-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 小靖</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
